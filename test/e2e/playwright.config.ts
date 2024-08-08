@@ -1,10 +1,10 @@
 import { defineConfig, devices } from '@playwright/test';
 
 let url: string;
-if (process.env.CODESPACE_NAME && process.env.GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN) {
-    url = `https://${process.env.CODESPACE_NAME}-80.${process.env.GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}/`;
-} else if (process.env.E2E_URL) {
+if (process.env.E2E_URL) {
     url = process.env.E2E_URL;
+} else if (process.env.CODESPACE_NAME && process.env.GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN) {
+    url = `https://${process.env.CODESPACE_NAME}-80.${process.env.GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}/`;
 } else {
     url = 'http://localhost';
 }
@@ -35,21 +35,29 @@ export default defineConfig({
     /* Configure projects for major browsers */
     projects: [
         {
+            name: 'setup',
+            testMatch: /codespaces\.ts/
+        },
+        {
             name: 'chromium',
-            use: { ...devices['Desktop Chrome'] },
+            use: { ...devices['Desktop Chrome'], storageState: 'state.json' },
+            dependencies: ['setup'],
         },
         {
             name: 'firefox',
-            use: { ...devices['Desktop Firefox'] },
+            use: { ...devices['Desktop Firefox'], storageState: 'state.json' },
+            dependencies: ['setup'],
         },
         {
             name: 'webkit',
-            use: { ...devices['Desktop Safari'] },
+            use: { ...devices['Desktop Safari'], storageState: 'state.json' },
+            dependencies: ['setup'],
         },
         /* Test against mobile viewports. */
         // {
         //     name: 'Mobile Chrome',
-        //     use: { ...devices['Pixel 5'] },
+        //     use: { ...devices['Pixel 5'], storageState: 'state.json' },
+        //     dependencies: ['setup'],
         // },
     ],
 });
