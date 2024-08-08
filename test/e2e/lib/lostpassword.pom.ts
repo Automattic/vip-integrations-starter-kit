@@ -41,18 +41,18 @@ export class LostPasswordPage extends BasePage {
 
     public async resetPassword(login: string): Promise<LostPasswordPage | ResetPasswordSuccessPage | Page> {
         await this.loginField.fill(login);
-        const [response] = await Promise.all([
-            this.page.waitForResponse((response) => response.url().includes('/wp-login.php') && response.request().method() === 'GET'),
-            this.getPasswordButton.click(),
-        ]);
+        await this.getPasswordButton.click();
+        await this.page.waitForLoadState('load');
 
-        const url = response.url();
-        if (url.includes('?action=lostpassword')) {
-            return new LostPasswordPage(this.page);
-        }
+        const url = new URL(this.lastNavigationRequest?.url() ?? '');
+        if (url.pathname.endsWith('/wp-login.php')) {
+            if (url.searchParams.get('action') === 'lostpassword') {
+                return new LostPasswordPage(this.page);
+            }
 
-        if (url.includes('?checkemail=confirm')) {
-            return new ResetPasswordSuccessPage(this.page);
+            if (url.searchParams.get('checkemail') === 'confirm') {
+                return new ResetPasswordSuccessPage(this.page);
+            }
         }
 
         return this.page;

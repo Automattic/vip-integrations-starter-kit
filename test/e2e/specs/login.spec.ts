@@ -3,8 +3,7 @@ import { LoginPage } from '../lib/login.pom';
 
 test.describe('Login page', () => {
     test.beforeEach(async ({ page }) => {
-        const loginPage = new LoginPage(page);
-        return loginPage.visit();
+        await page.goto('./wp-login.php');
     });
 
     test('Login with valid credentials', async ({ page }) => {

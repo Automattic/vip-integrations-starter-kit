@@ -56,12 +56,18 @@ export class LoginPage extends BasePage {
             await this.rememberMeField.uncheck();
         }
 
-        return this.loginButton.click();
+        await this.loginButton.click();
+        return this.page.waitForLoadState('load');
     }
 
-    public async lostPassword(): Promise<LostPasswordPage> {
+    public async lostPassword(): Promise<LostPasswordPage | Page> {
         await this.lostPasswordLink.click();
-        await this.page.waitForURL(/\/wp-login\.php\?action=lostpassword/); 
-        return new LostPasswordPage(this.page);
+        await this.page.waitForLoadState('load');
+        const url = new URL(this.page.url());
+        if (url.pathname.endsWith('/wp-login.php') && url.searchParams.get('action') === 'lostpassword') {
+            return new LostPasswordPage(this.page);
+        }
+
+        return this.page;
     }
 }
