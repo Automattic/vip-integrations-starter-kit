@@ -39,7 +39,7 @@ export class LostPasswordPage extends BasePage {
         return this.page.goto('./wp-login.php?action=lostpassword') as Promise<Response>;
     }
 
-    public async resetPassword(login: string): Promise<LostPasswordPage | ResetPasswordSuccessPage | Page> {
+    public async resetPassword(login: string): Promise<LostPasswordPage | ResetPasswordSuccessPage | BasePage> {
         await this.loginField.fill(login);
         await this.getPasswordButton.click();
         await this.page.waitForLoadState('load');
@@ -55,6 +55,6 @@ export class LostPasswordPage extends BasePage {
             }
         }
 
-        return this.page;
+        return new BasePage(this.page);
     }
 }

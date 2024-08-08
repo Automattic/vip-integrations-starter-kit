@@ -13,6 +13,6 @@ test.describe('Reset Password page', () => {
     test('Reset password', async ({ page }) => {
         const resetPasswordPage = new LostPasswordPage(page);
         const newPage = await resetPasswordPage.resetPassword('vipgo');
-        expect(newPage instanceof ResetPasswordSuccessPage).toBeTruthy();
+        expect(newPage).toBeInstanceOf(ResetPasswordSuccessPage);
     });
 });
