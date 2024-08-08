@@ -1,5 +1,14 @@
 import { defineConfig, devices } from '@playwright/test';
 
+let url: string;
+if (process.env.CODESPACE_NAME && process.env.GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN) {
+    url = `https://${process.env.CODESPACE_NAME}-80.${process.env.GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}/`;
+} else if (process.env.E2E_URL) {
+    url = process.env.E2E_URL;
+} else {
+    url = 'http://localhost';
+}
+
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
@@ -18,7 +27,7 @@ export default defineConfig({
     /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
     use: {
         /* Base URL to use in actions like `await page.goto('/')`. */
-        baseURL: 'http://localhost/',
+        baseURL: url,
         /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
         trace: 'on-first-retry',
     },
