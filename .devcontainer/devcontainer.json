@@ -24,7 +24,7 @@
         },
         "8025": {
             "label": "Mailpit",
-            "onAutoForward": "notify"
+            "onAutoForward": "ignore"
         },
         "9000": {
             "label": "php-fpm",
@@ -138,22 +138,11 @@
             // Set Xdebug mode. Accepted value options are listed here: https://xdebug.org/docs/all_settings#mode
             "mode": "debug"
         },
-        // Misc
-        "ghcr.io/automattic/vip-codespaces/mc:latest": {
-            // Set to true to enable Midnight Commander.
-            "enabled": false
-        },
-        "ghcr.io/automattic/vip-codespaces/ssh:latest": {
-            // Set to true to enable an SSH server for the Codespaces environment.
-            "enabled": false
+        // E2E
+        "ghcr.io/automattic/vip-codespaces/playwright:latest": {
+            "enabled": true,
+            "version": "latest"
         }
-    },
-    // *****************************
-    // *** Environment variables ***
-    // *****************************
-    "containerEnv": {
-    //  "MY_VAR": "example",
-    //  "MY_OTHER_VAR": "another example"
     },
     "customizations": {
         "vscode": {
