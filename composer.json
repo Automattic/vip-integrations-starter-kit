@@ -1,18 +1,33 @@
 {
-  "name": "automattic/vip-go-skeleton",
+  "name": "automattic/vip-integrations-skeleton",
   "description": "Used for setting up development dependencies across the whole repository.",
-  "homepage": "https://github.com/automattic/vip-go-skeleton",
+  "homepage": "https://github.com/automattic/vip-integrations-skeleton",
   "license": "GPL-2.0-or-later",
   "require": {
     "php": ">=8.0"
   },
   "require-dev": {
     "automattic/vipwpcs": "^3",
-    "phpcompatibility/phpcompatibility-wp": "^2"
+    "johnpbloch/wordpress-core": "^6.6",
+    "php-stubs/wordpress-stubs": "^6.6",
+    "phpcompatibility/phpcompatibility-wp": "^2",
+    "wp-phpunit/wp-phpunit": "^6.5",
+    "yoast/phpunit-polyfills": "^2.0"
   },
   "config": {
+    "sort-packages": true,
+    "platform": {
+        "php": "8.0"
+    },
     "allow-plugins": {
       "dealerdirect/phpcodesniffer-composer-installer": true
     }
+  },
+  "scripts": {
+    "post-install-cmd": [
+      "cd plugins/my-integration; composer install"
+    ],
+    "phpcs": "phpcs",
+    "phpcbf": "phpcbf"
   }
 }
