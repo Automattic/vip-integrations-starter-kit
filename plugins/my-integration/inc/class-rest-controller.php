@@ -6,7 +6,7 @@ use WP_REST_Request;
 use WP_REST_Response;
 use WP_REST_Server;
 
-final class REST_COntroller {
+final class REST_Controller {
 	public const NAMESPACE = 'wp-test-demo/v1';
 
 	private static $instance;
