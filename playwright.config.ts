@@ -26,6 +26,8 @@ export default defineConfig({
     reporter: 'dot',
 
     outputDir: '.playwright',
+    snapshotDir: './test/e2e/snapshots',
+    globalSetup: './test/e2e/globalSetup',
 
     /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
     use: {
