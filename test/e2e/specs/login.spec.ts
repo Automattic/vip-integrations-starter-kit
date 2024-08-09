@@ -6,6 +6,13 @@ test.describe('Login page', () => {
         await page.goto('./wp-login.php');
     });
 
+    test('Login page', async ({ page }) => {
+        await expect(page).toHaveScreenshot('login.png', {
+            fullPage: true,
+            maxDiffPixelRatio: 0.02,
+        });
+    });
+
     test('Login with valid credentials', async ({ page }) => {
         const loginPage = new LoginPage(page);
         await loginPage.login('vipgo', 'password', true);
