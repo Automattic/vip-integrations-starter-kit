@@ -11,5 +11,5 @@ test('codespaces', async ({ page, baseURL }) => {
         }
     }
 
-    await page.context().storageState({ path: `state.json` });
+    await page.context().storageState({ path: `.playwright/state.json` });
 });

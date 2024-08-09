@@ -13,7 +13,7 @@ if (process.env.E2E_URL) {
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-    testDir: './specs',
+    testDir: './test/e2e/specs',
     /* Run tests in files in parallel */
     fullyParallel: true,
     /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -24,6 +24,9 @@ export default defineConfig({
     workers: process.env.CI ? 1 : undefined,
     /* Reporter to use. See https://playwright.dev/docs/test-reporters */
     reporter: 'dot',
+
+    outputDir: '.playwright',
+
     /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
     use: {
         /* Base URL to use in actions like `await page.goto('/')`. */
@@ -40,23 +43,23 @@ export default defineConfig({
         },
         {
             name: 'chromium',
-            use: { ...devices['Desktop Chrome'], storageState: 'state.json' },
+            use: { ...devices['Desktop Chrome'], storageState: '.playwright/state.json' },
             dependencies: ['setup'],
         },
         {
             name: 'firefox',
-            use: { ...devices['Desktop Firefox'], storageState: 'state.json' },
+            use: { ...devices['Desktop Firefox'], storageState: '.playwright/state.json' },
             dependencies: ['setup'],
         },
         {
             name: 'webkit',
-            use: { ...devices['Desktop Safari'], storageState: 'state.json' },
+            use: { ...devices['Desktop Safari'], storageState: '.playwright/state.json' },
             dependencies: ['setup'],
         },
         /* Test against mobile viewports. */
         // {
         //     name: 'Mobile Chrome',
-        //     use: { ...devices['Pixel 5'], storageState: 'state.json' },
+        //     use: { ...devices['Pixel 5'], storageState: '.playwright/state.json' },
         //     dependencies: ['setup'],
         // },
     ],

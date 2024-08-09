@@ -1,14 +1,17 @@
 {
   "name": "e2e",
   "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {},
+  "private": "true",
   "keywords": [],
-  "author": "Volodymyr Kolesnykov <volodymyr@wildwolf.name> (https://wildwolf.name/)",
-  "license": "ISC",
+  "author": "",
+  "license": "MIT",
   "description": "",
   "devDependencies": {
     "@playwright/test": "^1.45.3",
     "@types/node": "^22.1.0"
+  },
+  "scripts": {
+    "test": "playwright test",
+    "test:ui": "playwright test --ui"
   }
 }
