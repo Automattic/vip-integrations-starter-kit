@@ -2,7 +2,8 @@ import { expect, test } from '@playwright/test';
 import { LoginPage } from '../lib/login.pom';
 
 test.describe('Login page', () => {
-    test.beforeEach(async ({ page }) => {
+    test.beforeEach(async ({ page, context }) => {
+        await context.clearCookies({ name: /^wordpress_/u });
         await page.goto('./wp-login.php');
     });
 

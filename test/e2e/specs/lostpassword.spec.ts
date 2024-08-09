@@ -4,7 +4,8 @@ import { LostPasswordPage } from '../lib/lostpassword.pom';
 import { ResetPasswordSuccessPage } from '../lib/resetpasswordsuccess.pom';
 
 test.describe('Reset Password page', () => {
-    test.beforeEach(async ({ page }) => {
+    test.beforeEach(async ({ context, page }) => {
+        await context.clearCookies({ name: /^wordpress_/u });
         const loginPage = new LoginPage(page);
         await loginPage.visit();
         await loginPage.lostPassword();

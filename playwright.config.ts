@@ -1,4 +1,4 @@
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig, devices, type PlaywrightTestProject } from '@playwright/test';
 
 let url: string;
 if (process.env.E2E_URL) {
@@ -8,6 +8,13 @@ if (process.env.E2E_URL) {
 } else {
     url = 'http://localhost';
 }
+
+const defaultSettings: PlaywrightTestProject['use'] = {
+    storageState: '.playwright/state.json',
+    ignoreHTTPSErrors: true,
+    video: 'retain-on-failure',
+    trace: 'retain-on-failure',
+};
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -41,28 +48,28 @@ export default defineConfig({
     projects: [
         {
             name: 'setup',
-            testMatch: /codespaces\.ts/
+            testMatch: /setup\.ts/
         },
         {
             name: 'chromium',
-            use: { ...devices['Desktop Chrome'], storageState: '.playwright/state.json' },
+            use: { ...devices['Desktop Chrome'], ...defaultSettings },
             dependencies: ['setup'],
         },
-        {
-            name: 'firefox',
-            use: { ...devices['Desktop Firefox'], storageState: '.playwright/state.json' },
-            dependencies: ['setup'],
-        },
-        {
-            name: 'webkit',
-            use: { ...devices['Desktop Safari'], storageState: '.playwright/state.json' },
-            dependencies: ['setup'],
-        },
-        /* Test against mobile viewports. */
         // {
-        //     name: 'Mobile Chrome',
-        //     use: { ...devices['Pixel 5'], storageState: '.playwright/state.json' },
+        //     name: 'firefox',
+        //     use: { ...devices['Desktop Firefox'], ...defaultSettings },
         //     dependencies: ['setup'],
         // },
+        // {
+        //     name: 'webkit',
+        //     use: { ...devices['Desktop Safari'], ...defaultSettings },
+        //     dependencies: ['setup'],
+        // },
+        /* Test against mobile viewports. */
+        {
+            name: 'Mobile Chrome',
+            use: { ...devices['Pixel 5'], ...defaultSettings },
+            dependencies: ['setup'],
+        },
     ],
 });
