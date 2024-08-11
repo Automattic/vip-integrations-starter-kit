@@ -13,7 +13,7 @@ test.describe('Set up', () => {
         try {
             await stat(storagePath);
         } catch {
-            writeFile(storagePath, '{}');
+            await writeFile(storagePath, '{}');
         }
     });
 
