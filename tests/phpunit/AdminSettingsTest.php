@@ -13,8 +13,9 @@ use WP_UnitTestCase;
  */
 class AdminSettingsTest extends WP_UnitTestCase {
 	public static function setUpBeforeClass(): void {
-		// Fix for `get_admin_page_title()`
+		// `get_admin_page_title()` needs `menu` to be an array
 		if ( ! isset( $GLOBALS['menu'] ) ) {
+			// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 			$GLOBALS['menu'] = [];
 		}
 	}
@@ -26,6 +27,7 @@ class AdminSettingsTest extends WP_UnitTestCase {
 
 	public function tearDown(): void {
 		parent::tearDown();
+		// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 		$GLOBALS['plugin_page'] = null;
 	}
 
@@ -57,8 +59,10 @@ class AdminSettingsTest extends WP_UnitTestCase {
 	public function testSettingsPage_guest(): void {
 		global $plugin_page;
 
+		// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 		$plugin_page = Admin::OPTIONS_MENU_SLUG;
 		wp_set_current_user( 0 );
+
 		ob_start();
 		AdminSettings::get_instance()->settings_page();
 		$contents = ob_get_clean();
@@ -69,6 +73,7 @@ class AdminSettingsTest extends WP_UnitTestCase {
 	public function testSettingsPage_admin(): void {
 		global $plugin_page;
 
+		// phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 		$plugin_page = Admin::OPTIONS_MENU_SLUG;
 
 		ob_start();
