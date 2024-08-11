@@ -15,13 +15,16 @@ use LogicException;
  */
 final class Settings implements ArrayAccess {
 	/** @var string  */
-	const OPTION_KEY = 'testdemo_settings';
+	const OPTIONS_KEY = 'testdemo_settings';
 
 	private static $instance;
 
 	public static function get_instance(): self {
 		if ( ! self::$instance ) {
+			// @codeCoverageIgnoreStart
+			// Depending on the test order, the instance may have already been set
 			self::$instance = new self();
+			// @codeCoverageIgnoreEnd
 		}
 
 		return self::$instance;
@@ -42,13 +45,16 @@ final class Settings implements ArrayAccess {
 	 */
 	private $options;
 
+	/**
+	 * @codeCoverageIgnore -- depending on the test order, this could be untestable because the class is a singleton
+	 */
 	private function __construct() {
 		$this->refresh();
 	}
 
 	public function refresh(): void {
 		/** @var mixed */
-		$settings      = get_option( self::OPTION_KEY );
+		$settings      = get_option( self::OPTIONS_KEY );
 		$this->options = SettingsValidator::ensure_data_shape( is_array( $settings ) ? $settings : [] );
 	}
 
@@ -92,12 +98,5 @@ final class Settings implements ArrayAccess {
 	 */
 	public function offsetUnset( $_offset ): void {
 		throw new LogicException();
-	}
-
-	/**
-	 * @psalm-return SettingsArray
-	 */
-	public function as_array(): array {
-		return $this->options;
 	}
 }

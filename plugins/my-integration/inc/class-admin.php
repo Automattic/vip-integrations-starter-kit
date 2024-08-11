@@ -26,12 +26,12 @@ final class Admin {
 	}
 
 	public function admin_init(): void {
-		$plugin = plugin_basename( dirname( __DIR__ ) . '/index.php' );
+		$plugin = plugin_basename( 'my-integration/index.php' );
 		add_filter( 'plugin_action_links_' . $plugin, [ $this, 'plugin_action_links' ] );
 	}
 
 	public function admin_menu(): void {
-		add_options_page( __( 'TestDemo Settings', 'test-demo' ), __( 'TestDemo Settings', 'test-demo' ), 'manage_options', self::OPTIONS_MENU_SLUG, [ __CLASS__, 'options_page' ] );
+		add_options_page( __( 'TestDemo Settings', 'test-demo' ), __( 'TestDemo Settings', 'test-demo' ), 'manage_options', self::OPTIONS_MENU_SLUG, [ AdminSettings::class, 'settings_page' ] );
 	}
 
 	/**
@@ -43,9 +43,5 @@ final class Admin {
 		$link              = '<a href="' . $url . '">' . __( 'Settings', 'test-demo' ) . '</a>';
 		$links['settings'] = $link;
 		return $links;
-	}
-
-	public static function options_page(): void {
-		require __DIR__ . '/../views/options.php'; // NOSONAR
 	}
 }

@@ -9,7 +9,10 @@ final class AdminSettings {
 
 	public static function get_instance(): self {
 		if ( ! self::$instance ) {
+			// @codeCoverageIgnoreStart
+			// Depending on the test order, this may not be testable
 			self::$instance = new self();
+			// @codeCoverageIgnoreEnd
 		}
 
 		return self::$instance;
@@ -19,19 +22,17 @@ final class AdminSettings {
 	private $input_factory;
 
 	/**
-	 * Constructed during `admin_init`
-	 *
-	 * @codeCoverageIgnore
+	 * @codeCoverageIgnore -- coverage depends on the test order
 	 */
 	private function __construct() {
 		$this->register_settings();
 	}
 
 	public function register_settings(): void {
-		$this->input_factory = new InputFactory( Settings::OPTION_KEY, Settings::get_instance() );
+		$this->input_factory = new InputFactory( Settings::OPTIONS_KEY, Settings::get_instance() );
 		register_setting(
 			self::OPTION_GROUP,
-			Settings::OPTION_KEY,
+			Settings::OPTIONS_KEY,
 			[
 				'default'           => [],
 				'sanitize_callback' => [ SettingsValidator::class, 'sanitize' ],
@@ -58,7 +59,7 @@ final class AdminSettings {
 		);
 
 		add_settings_field(
-			'host',
+			'message',
 			__( 'Message', 'test-demo' ),
 			[ $this->input_factory, 'input' ],
 			Admin::OPTIONS_MENU_SLUG,
@@ -72,5 +73,11 @@ final class AdminSettings {
 				),
 			]
 		);
+	}
+
+	public static function settings_page(): void {
+		if ( current_user_can( 'manage_options' ) ) {
+			require __DIR__ . '/../views/options.php'; // NOSONAR
+		}
 	}
 }

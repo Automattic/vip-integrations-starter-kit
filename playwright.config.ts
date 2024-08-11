@@ -20,7 +20,7 @@ const defaultSettings: PlaywrightTestProject['use'] = {
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-    testDir: './test/e2e/specs',
+    testDir: './tests/e2e/specs',
     /* Run tests in files in parallel */
     fullyParallel: true,
     /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -33,8 +33,8 @@ export default defineConfig({
     reporter: 'dot',
 
     outputDir: '.playwright',
-    snapshotDir: './test/e2e/snapshots',
-    globalSetup: './test/e2e/globalSetup',
+    snapshotDir: './tests/e2e/snapshots',
+    globalSetup: './tests/e2e/globalSetup',
 
     /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
     use: {

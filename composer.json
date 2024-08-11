@@ -28,6 +28,8 @@
       "cd plugins/my-integration; composer install"
     ],
     "phpcs": "phpcs",
-    "phpcbf": "phpcbf"
+    "phpcbf": "phpcbf",
+    "test": "phpunit",
+    "test:coverage": "phpunit --coverage-html=coverage --coverage-text"
   }
 }

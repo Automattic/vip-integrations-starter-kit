@@ -35,12 +35,12 @@ final class REST_Controller {
 					'a' => [
 						'required'          => true,
 						'type'              => 'integer',
-						'sanitize_callback' => 'intval',
+						'sanitize_callback' => fn ( $x ) => intval( $x ),
 					],
 					'b' => [
 						'required'          => true,
 						'type'              => 'integer',
-						'sanitize_callback' => 'intval',
+						'sanitize_callback' => fn ( $x ) => intval( $x ),
 					],
 				],
 			]
