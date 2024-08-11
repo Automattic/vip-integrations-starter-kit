@@ -33,8 +33,13 @@
         "9003": {
             "label": "Xdebug Client Port",
             "onAutoForward": "notify"
+        },
+        "9323": {
+            "label": "Playwright",
+            "onAutoForward": "ignore"
         }
     },
+    "updateContentCommand": ".devcontainer/update-content.sh",
     "features": {
         // *************************
         // *** Required features ***
@@ -93,7 +98,7 @@
         // Photon
         "ghcr.io/automattic/vip-codespaces/photon:latest": {
             // Set to false if you don't need Photon
-            "enabled": true,
+            "enabled": false,
             // Set to false to enable image optimizations. This may slow down requests.
             "disable_optimizations": true,
             // Process images only if they have a query string in their URLs
@@ -134,12 +139,17 @@
         "ghcr.io/automattic/vip-codespaces/xdebug:latest": {
             // Set to true to enable Xdebug.
             // This setting can also be updated with CLI commands in the terminal.
-            "enabled": false,
+            "enabled": true,
             // Set Xdebug mode. Accepted value options are listed here: https://xdebug.org/docs/all_settings#mode
-            "mode": "debug"
+            "mode": "debug,coverage"
         },
         // E2E
         "ghcr.io/automattic/vip-codespaces/playwright:latest": {
+            "enabled": true,
+            "version": "latest"
+        },
+        // Unit Testing
+        "ghcr.io/automattic/vip-codespaces/wptl:latest": {
             "enabled": true,
             "version": "latest"
         }
