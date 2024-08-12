@@ -18,8 +18,24 @@
             "label": "Mailpit SMTP",
             "onAutoForward": "ignore"
         },
+        "2222": {
+            "label": "SSH",
+            "onAutoForward": "silent"
+        },
         "3306": {
             "label": "MySQL",
+            "onAutoForward": "ignore"
+        },
+        "5800": {
+            "label": "NoVNC",
+            "onAutoForward": "notify"
+        },
+        "5900": {
+            "label": "VNC",
+            "onAutoForward": "ignore"
+        },
+        "6000": {
+            "label": "X11",
             "onAutoForward": "ignore"
         },
         "8025": {
@@ -32,7 +48,7 @@
         },
         "9003": {
             "label": "Xdebug Client Port",
-            "onAutoForward": "notify"
+            "onAutoForward": "ignore"
         },
         "9323": {
             "label": "Playwright",
@@ -133,6 +149,13 @@
         },
         "ghcr.io/automattic/vip-codespaces/phpmyadmin:latest": {
             // Set to false to disable phpMyAdmin.
+            "enabled": true
+        },
+        "ghcr.io/automattic/vip-codespaces/ssh:latest": {
+            "enabled": true,
+            "port": "2222"
+        },
+        "ghcr.io/automattic/vip-codespaces/desktop-lite:latest": {
             "enabled": true
         },
         // Debugging
