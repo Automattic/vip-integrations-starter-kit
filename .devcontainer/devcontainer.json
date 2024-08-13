@@ -2,7 +2,7 @@
     "name": "WordPress VIP Codespace",
     "image": "ghcr.io/automattic/vip-codespaces/ubuntu-base:latest",
     "overrideCommand": false,
-    "forwardPorts": [80, 81, 8025],
+    "forwardPorts": [80, 81, 5800, 8025],
     "portsAttributes": {
         "80": {
             "label": "Application",
@@ -11,49 +11,24 @@
         },
         "81": {
             "label": "phpMyAdmin",
-            "onAutoForward": "notify",
+            "onAutoForward": "silent",
             "elevateIfNeeded": true
-        },
-        "1025": {
-            "label": "Mailpit SMTP",
-            "onAutoForward": "ignore"
         },
         "2222": {
             "label": "SSH",
             "onAutoForward": "silent"
         },
-        "3306": {
-            "label": "MySQL",
-            "onAutoForward": "ignore"
-        },
         "5800": {
             "label": "NoVNC",
             "onAutoForward": "notify"
         },
-        "5900": {
-            "label": "VNC",
-            "onAutoForward": "ignore"
-        },
-        "6000": {
-            "label": "X11",
-            "onAutoForward": "ignore"
-        },
         "8025": {
             "label": "Mailpit",
-            "onAutoForward": "ignore"
-        },
-        "9000": {
-            "label": "php-fpm",
-            "onAutoForward": "ignore"
-        },
-        "9003": {
-            "label": "Xdebug Client Port",
-            "onAutoForward": "ignore"
-        },
-        "9323": {
-            "label": "Playwright",
-            "onAutoForward": "ignore"
+            "onAutoForward": "silent"
         }
+    },
+    "otherPortsAttributes": {
+        "onAutoForward": "ignore"
     },
     "updateContentCommand": ".devcontainer/update-content.sh",
     "features": {
