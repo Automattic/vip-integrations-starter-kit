@@ -17,6 +17,7 @@ final class Settings implements ArrayAccess {
 	/** @var string  */
 	const OPTIONS_KEY = 'testdemo_settings';
 
+	/** @var self|null */
 	private static $instance;
 
 	public static function get_instance(): self {

@@ -5,6 +5,7 @@ namespace MyNamespace\TestDemo;
 final class AdminSettings {
 	const OPTION_GROUP = 'testdemo_settings';
 
+	/** @var self|null */
 	private static $instance;
 
 	public static function get_instance(): self {

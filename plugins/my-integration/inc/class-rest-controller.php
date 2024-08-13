@@ -9,6 +9,7 @@ use WP_REST_Server;
 final class REST_Controller {
 	public const NAMESPACE = 'wp-test-demo/v1';
 
+	/** @var self|null */
 	private static $instance;
 
 	public static function get_instance(): self {
@@ -30,17 +31,17 @@ final class REST_Controller {
 			[
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => [ $this, 'sum' ],
-				'permission_callback' => fn() => current_user_can( 'read' ),
+				'permission_callback' => fn(): bool => current_user_can( 'read' ),
 				'args'                => [
 					'a' => [
 						'required'          => true,
 						'type'              => 'integer',
-						'sanitize_callback' => fn ( $x ) => intval( $x ),
+						'sanitize_callback' => /** @param mixed $x */ fn ( $x ): int => intval( $x ),
 					],
 					'b' => [
 						'required'          => true,
 						'type'              => 'integer',
-						'sanitize_callback' => fn ( $x ) => intval( $x ),
+						'sanitize_callback' => /** @param mixed $x */ fn ( $x ): int => intval( $x ),
 					],
 				],
 			]
@@ -48,8 +49,8 @@ final class REST_Controller {
 	}
 
 	public function sum( WP_REST_Request $request ): WP_REST_Response {
-		$a = $request->get_param( 'a' );
-		$b = $request->get_param( 'b' );
+		$a = (int) $request->get_param( 'a' );
+		$b = (int) $request->get_param( 'b' );
 
 		return rest_ensure_response( $a + $b );
 	}

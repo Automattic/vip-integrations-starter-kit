@@ -5,6 +5,7 @@ namespace MyNamespace\TestDemo;
 final class Admin {
 	const OPTIONS_MENU_SLUG = 'testdemo-settings';
 
+	/** @var self|null */
 	private static $instance;
 
 	public static function get_instance(): self {

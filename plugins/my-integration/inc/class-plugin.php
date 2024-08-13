@@ -3,6 +3,7 @@
 namespace MyNamespace\TestDemo;
 
 final class Plugin {
+	/** @var self|null */
 	private static $instance;
 
 	// @codeCoverageIgnoreStart
