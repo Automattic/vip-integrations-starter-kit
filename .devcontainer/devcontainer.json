@@ -103,7 +103,7 @@
         "ghcr.io/automattic/vip-codespaces/elasticsearch:latest": {
             // Set to true to enable Elasticsearch.
             // This feature requires the local machine to have at least 8 GB RAM.
-            "enabled": false,
+            "enabled": true,
             // Set to false to prevent Elasticsearch data from persisting between rebuilds.
             "installDataToWorkspaces": true
         },
@@ -164,7 +164,8 @@
                 "zhiayang.tabindentspacealign",
                 "emilast.LogFileHighlighter",
                 "automattic.logwatcher",
-                "ms-playwright.playwright"
+                "ms-playwright.playwright",
+                "recca0120.vscode-phpunit"
             ],
             "settings": {
                 "launch": {
