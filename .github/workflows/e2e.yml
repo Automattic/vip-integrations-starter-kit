@@ -1,0 +1,72 @@
+name: Run E2E tests
+
+on:
+  push:
+    # branches:
+    #   - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        wordpress: ['6.5', '6.6']
+    name: E2E Tests on WordPress ${{ matrix.wordpress }}
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@c541c155eee45413f5b09a52248675b1a2575231 # 2.31.1
+        env:
+          fail-fast: 'true'
+
+      - name: Install PHP Dependencies
+        uses: ramsey/composer-install@57532f8be5bda426838819c5ee9afb8af389d51a # 3.0.0
+  
+      - name: Set up Node.js
+        uses: actions/setup-node@1e60f620b9541d16bece96c5465dc8ee9832be0b # v4.0.3
+        with:
+          node-version: lts/*
+          cache: npm
+
+      - name: Install Node.js dependencies
+        run: npm ci
+
+      - name: Install Playwright
+        run: npx playwright install
+
+      - name: Install Playwright dependencies
+        run: sudo -E npx playwright install-deps
+
+      - name: Install VIP CLI
+        run: npm install -g @automattic/vip
+
+      - name: Create development environment
+        run: vip dev-env create --wordpress ${{ matrix.wordpress }} < /dev/null
+
+      - name: Start development environment
+        run: vip dev-env start --slug integration-demo --skip-wp-versions-check
+
+      - name: Run E2E tests
+        run: npm test
+        env:
+          E2E_URL: http://integration-demo.vipdev.lndo.site/
+
+      - name: Archive test results
+        uses: actions/upload-artifact@834a144ee995460fba8ed112a2fc961b36a5ec5a # v4.3.6
+        if: failure()
+        with:
+          name: test-results
+          path: .playwright
+          retention-days: 7

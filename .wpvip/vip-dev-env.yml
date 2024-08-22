@@ -1,6 +1,6 @@
 configuration-version: 1
 slug: integration-demo
-title: Integration Demo
+title: Just another WordPress site
 php: 8.2
 wordpress: 6.6
 app-code: ../
