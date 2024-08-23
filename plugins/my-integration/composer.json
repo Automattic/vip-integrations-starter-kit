@@ -1,0 +1,17 @@
+{
+    "name": "automattic/my-integration",
+    "type": "wordpress-plugin",
+    "license": "MIT",
+    "require": {
+        "php": "^8.0.0"
+    },
+    "autoload": {
+        "classmap": ["inc/"]
+    },
+    "config": {
+        "sort-packages": true,
+        "platform": {
+            "php": "8.0"
+        }
+    }
+}

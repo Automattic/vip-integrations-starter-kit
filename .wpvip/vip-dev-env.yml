@@ -1,0 +1,14 @@
+configuration-version: 1
+slug: integration-demo
+title: Just another WordPress site
+php: 8.2
+wordpress: 6.6
+app-code: ../
+mu-plugins: image
+multisite: true
+phpmyadmin: false
+elasticsearch: false
+xdebug: true
+mailpit: false
+photon: false
+cron: false
