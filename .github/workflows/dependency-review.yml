@@ -2,9 +2,15 @@ name: Dependency Review
 
 on:
   pull_request:
+    branches:
+      - main
 
 permissions:
   contents: read
+
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
   dependency-review:

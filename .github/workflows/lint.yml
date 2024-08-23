@@ -2,14 +2,19 @@ name: Code Standards Compliance Checks
 
 on:
   push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 concurrency:
   cancel-in-progress: true
   group: ${{ github.workflow }}-${{ github.ref }}
-
-permissions:
-  contents: read
 
 jobs:
   php:

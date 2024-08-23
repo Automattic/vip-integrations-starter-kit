@@ -2,8 +2,8 @@ name: Run E2E tests
 
 on:
   push:
-    # branches:
-    #   - main
+    branches:
+      - main
   pull_request:
     branches:
       - main
@@ -11,6 +11,10 @@ on:
 
 permissions:
   contents: read
+
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
   e2e:
