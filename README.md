@@ -40,7 +40,7 @@ For more information please refer to [linting doc](/docs/linting.md).
 
 For more information on how our codebase is structured, see https://docs.wpvip.com/technical-references/vip-codebase/. 
 
-## Prerequisites and local installation 
+## Local installation and development
 
 To fully leverage the starter kit you will need to have the following tools installed: [Composer](https://getcomposer.org/), [Node.js](https://nodejs.org/en), NPM (installed with Node.js), [Docker](https://www.docker.com/), [VIP-CLI](https://docs.wpvip.com/vip-cli/).
 
@@ -67,7 +67,9 @@ vip dev-env start
 
 📝 For convenience, this repository contains a special configuration file [vip-dev-env.yml](/.wpvip/vip-dev-env.yml), feel free to tweak it to your needs. For more in-depth guide to VIP Local Development Environments please refer to [our documentation site](https://docs.wpvip.com/vip-local-development-environment/create/).
 
+## Cloud-based development
 
+We leverage GitHub Codespaces. There are no set up steps. On the first start of the codespace it will take a few minutes to build. Once the build runs you'll have a working environment. You can use either Web-based editor or local VSCode.
 
 ## Submitting your plugin to WordPress VIP Integrations Center
 
