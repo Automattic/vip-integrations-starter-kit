@@ -32,4 +32,4 @@ require_once $_tests_dir . '/includes/bootstrap.php';
  * @var string
  */
 global $wp_version;
-echo 'WP Version: ', $wp_version, PHP_EOL;
+echo 'WP Version: ', esc_html( $wp_version ), PHP_EOL;
