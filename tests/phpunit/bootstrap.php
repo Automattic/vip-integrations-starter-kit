@@ -26,3 +26,10 @@ tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 // Start up the WP testing environment.
 /** @psalm-suppress UnresolvableInclude */
 require_once $_tests_dir . '/includes/bootstrap.php';
+
+/**
+ * @psalm-suppress InvalidGlobal
+ * @var string
+ */
+global $wp_version;
+echo 'WP Version: ', $wp_version, PHP_EOL;
