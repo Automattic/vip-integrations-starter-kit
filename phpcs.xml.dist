@@ -5,18 +5,13 @@
 		xsi:noNamespaceSchemaLocation="vendor/squizlabs/php_codesniffer/phpcs.xsd">
 	<description>Custom ruleset for VIP sites.</description>
 
-	<!-- Note: this file is only used for local PHPCS checks; the vip-go-ci bot does not read it.
-	To customize the bot's behavior, see https://docs.wpvip.com/how-tos/customize-the-bot/. -->
-
 	<!-- For help in understanding this file: https://github.com/squizlabs/PHP_CodeSniffer/wiki/Annotated-ruleset.xml -->
 	<!-- For help in using PHPCS: https://github.com/squizlabs/PHP_CodeSniffer/wiki/Usage -->
 	<!-- For VIP code review items: https://docs.wpvip.com/technical-references/code-review/ -->
 	<!-- For VIP PHPCS severity levels: https://docs.wpvip.com/technical-references/vip-code-analysis-bot/phpcs-report/ -->
 
 	<!-- What to scan -->
-	<file>./themes/</file>
-	<file>./client-mu-plugins/</file>
-	<file>./plugins/</file>
+	<file>./plugins/my-integration/</file>
 	<file>./tests/phpunit/</file>
 	<!-- Ignoring Files and Folders:
 		https://github.com/squizlabs/PHP_CodeSniffer/wiki/Advanced-Usage#ignoring-files-and-folders -->
@@ -46,11 +41,20 @@
 
 	<!-- Rules: WordPress Coding Standards - see
 		https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards -->
-	<!--<rule ref="WordPress-Extra"/>--> <!-- Includes WordPress-Core -->
+	<rule ref="WordPress-Extra"/> <!-- Includes WordPress-Core -->
 	<!--<rule ref="WordPress-Docs"/>-->
 	<!-- For help in understanding this minimum_supported_wp_version:
 		https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/wiki/Customizable-sniff-properties#setting-minimum-supported-wp-version-for-all-sniffs-in-one-go-wpcs-0140 -->
 	<config name="minimum_supported_wp_version" value="6.1"/>
 
-	<!-- For more information on customizing this file, see https://docs.wpvip.com/technical-references/vip-codebase/phpcs-xml-dist/. -->
+	<rule ref="WordPress-VIP-Go">
+		<exclude name="PEAR.Functions.FunctionCallSignature.ContentAfterOpenBracket" />
+		<exclude name="PEAR.Functions.FunctionCallSignature.MultipleArguments" />
+		<exclude name="PEAR.Functions.FunctionCallSignature.CloseBracketLine" />
+		<exclude name="Universal.Arrays.DisallowShortArraySyntax.Found"/>
+	</rule>
+
+	<rule ref="WordPress.Files.FileName">
+		<exclude-pattern>/tests/*</exclude-pattern>
+	</rule>
 </ruleset>
