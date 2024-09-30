@@ -9,4 +9,10 @@
  * @see https://docs.wpvip.com/technical-references/vip-codebase/client-mu-plugins-directory/
  */
 
-wpcom_vip_load_plugin( 'my-integration/index.php' );
+use Automattic\VIP\Integrations\IntegrationsSingleton;
+use MyNamespace\TestDemo\Integration;
+
+require_once WP_PLUGIN_DIR . '/my-integration/class-integration.php';
+
+IntegrationsSingleton::instance()->register( new Integration( 'demo-integration' ) );
+IntegrationsSingleton::instance()->activate( 'demo-integration', [] );
