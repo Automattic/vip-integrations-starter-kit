@@ -4,6 +4,7 @@ title: Just another WordPress site
 php: 8.2
 wordpress: 6.7
 app-code: ../
+# Update to the local path of MU-plugins when working on the integration loader code.
 mu-plugins: image
 multisite: true
 phpmyadmin: false
