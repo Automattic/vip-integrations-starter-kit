@@ -6,7 +6,7 @@ wordpress: 6.7
 app-code: ../
 # Update to the local path of MU-plugins when working on the integration loader code.
 mu-plugins: image
-multisite: true
+multisite: false
 phpmyadmin: false
 elasticsearch: false
 xdebug: true
