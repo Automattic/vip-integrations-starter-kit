@@ -22,7 +22,7 @@ For end-to-end tests we use [Playwright](https://playwright.dev/). Examples can 
 
 [Psalm](https://psalm.dev/) is a free & open-source static analysis tool that helps you identify problems in your code.
 
-Please note, for Psalm to work properly you will need to annotate your PHP code. For examples please refer to [/plugins/my-integration](/plugins/my-integration).
+Please note, for Psalm to work properly you will need to annotate your PHP code. For examples please refer to [/inc](/inc).
 
 ### Linting and coding standards.
 
