@@ -11,13 +11,11 @@
 	<!-- For VIP PHPCS severity levels: https://docs.wpvip.com/technical-references/vip-code-analysis-bot/phpcs-report/ -->
 
 	<!-- What to scan -->
-	<file>./plugins/my-integration/</file>
+	<file>./inc/</file>
+	<file>./views/</file>
 	<file>./tests/phpunit/</file>
 	<!-- Ignoring Files and Folders:
 		https://github.com/squizlabs/PHP_CodeSniffer/wiki/Advanced-Usage#ignoring-files-and-folders -->
-	<exclude-pattern>./themes/twentytwentyfour/</exclude-pattern>
-	<exclude-pattern>./themes/twentytwentythree/</exclude-pattern>
-	<exclude-pattern>./themes/twentytwentytwo/</exclude-pattern>
 	<exclude-pattern>./node_modules/</exclude-pattern>
 	<exclude-pattern>./vendor/</exclude-pattern>
 
