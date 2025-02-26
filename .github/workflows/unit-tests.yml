@@ -60,12 +60,15 @@ jobs:
       - name: Check out source code
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
+      - name: Install subversion
+        run: sudo apt-get update && sudo apt-get install subversion
+
       - name: Decide whether to enable coverage
         id: coverage
         run: |
           if [ "${{ matrix.config.coverage }}" = "yes" ]; then
             echo "::set-output name=coverage::pcov"
-            echo '::set-output name=ini::pcov.directory=plugins/my-integration, pcov.exclude="~/(vendor|node_modules)/~"'
+            echo '::set-output name=ini::pcov.directory=inc, pcov.exclude="~/(vendor|node_modules)/~"'
           else
             echo "::set-output name=coverage::none"
           fi
@@ -83,7 +86,7 @@ jobs:
         uses: ramsey/composer-install@57532f8be5bda426838819c5ee9afb8af389d51a # 3.0.0
 
       - name: Set up WordPress and WordPress Test Library
-        uses: sjinks/setup-wordpress-test-library@badbd264eafbfd40b3d1c280b08c83ff1b500334 # 2.0.2
+        uses: sjinks/setup-wordpress-test-library@1332d0431f1d82b54ed40ec0c6708035694e6cad # 2.1.3
         with:
           version: ${{ matrix.config.wp }}
 
