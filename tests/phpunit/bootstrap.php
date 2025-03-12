@@ -13,12 +13,16 @@ if ( ! file_exists( $_tests_dir . '/includes/functions.php' ) ) {
 	throw new Exception( "Could not find {$_tests_dir}/includes/functions.php" ); // NOSONAR
 }
 
+if ( ! defined( 'WPMU_PLUGIN_DIR' ) ) {
+	define( 'WPMU_PLUGIN_DIR', 'empty' );
+}
+
 // Give access to tests_add_filter() function.
 /** @psalm-suppress UnresolvableInclude */
 require_once $_tests_dir . '/includes/functions.php';
 
 function _manually_load_plugin(): void {
-	require_once __DIR__ . '/../../plugins/my-integration/index.php';
+	require_once __DIR__ . '/../../index.php';
 }
 
 tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );

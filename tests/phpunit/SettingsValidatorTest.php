@@ -20,7 +20,7 @@ class SettingsValidatorTest extends WP_UnitTestCase {
 	 */
 	public function test_sanitize( $value, array $expected ): void {
 		AdminSettings::get_instance()->register_settings();
-		update_option( Settings::OPTIONS_KEY, $value );
+		static::assertTrue( update_option( Settings::OPTIONS_KEY, $value ) );
 
 		/** @var mixed */
 		$actual = get_option( Settings::OPTIONS_KEY );
@@ -33,7 +33,7 @@ class SettingsValidatorTest extends WP_UnitTestCase {
 	public function data_sanitize(): iterable {
 		return [
 			[
-				'',
+				[],
 				[
 					'enabled' => false,
 					'message' => 'Hello',

@@ -6,15 +6,14 @@
     findUnusedPsalmSuppress="true"
     findUnusedCode="true"
     findUnusedBaselineEntry="true"
-    autoloader="psalm-autoloader.php"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
 >
     <projectFiles>
-        <file name="plugins/my-integration/index.php"/>
-        <directory name="plugins/my-integration/inc"/>
-        <directory name="plugins/my-integration/views"/>
+        <file name="index.php"/>
+        <directory name="inc"/>
+        <directory name="views"/>
         <directory name="tests/phpunit"/>
     </projectFiles>
     <issueHandlers>
