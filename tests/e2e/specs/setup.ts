@@ -1,4 +1,4 @@
-import { stat, writeFile } from 'node:fs/promises';
+import { open, writeFile, constants } from 'node:fs/promises';
 import { expect, test } from '@playwright/test';
 import { LoginPage } from '../lib/login.pom';
 import { AdminPage } from '../lib/adminpage';
@@ -11,9 +11,10 @@ test.describe('Set up', () => {
 
     test.beforeAll(async () => {
         try {
-            await stat(storagePath);
+            const fd = await open(storagePath, constants.O_CREAT | constants.O_EXCL | constants.O_WRONLY, 0o644);
+            await writeFile(fd, '{}');
         } catch {
-            await writeFile(storagePath, '{}');
+            // Do nothing, file exists
         }
     });
 
