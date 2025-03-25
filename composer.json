@@ -18,7 +18,7 @@
     "vimeo/psalm": "^5.21.1",
     "wildwolf/wordpress-test-library-stubs": "^6.2",
     "wp-phpunit/wp-phpunit": "^6.5",
-    "yoast/phpunit-polyfills": "^2.0"
+    "yoast/phpunit-polyfills": "^4.0"
   },
   "config": {
     "sort-packages": true,
