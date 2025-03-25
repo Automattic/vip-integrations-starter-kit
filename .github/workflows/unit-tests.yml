@@ -67,10 +67,10 @@ jobs:
         id: coverage
         run: |
           if [ "${{ matrix.config.coverage }}" = "yes" ]; then
-            echo "::set-output name=coverage::pcov"
-            echo '::set-output name=ini::pcov.directory=inc, pcov.exclude="~/(vendor|node_modules)/~"'
+            echo coverage=pcov >> "${GITHUB_OUTPUT}"
+            echo 'ini=pcov.directory=inc, pcov.exclude="~/(vendor|node_modules)/~"' >> "${GITHUB_OUTPUT}"
           else
-            echo "::set-output name=coverage::none"
+            echo coverage=none >> "${GITHUB_OUTPUT}"
           fi
 
       - name: Set up PHP
