@@ -24,7 +24,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        wordpress: ['6.5', '6.6']
+        wordpress: ['6.7', '6.8']
     name: E2E Tests on WordPress ${{ matrix.wordpress }}
     steps:
       - name: Check out repository code
@@ -61,6 +61,9 @@ jobs:
 
       - name: Start development environment
         run: vip dev-env start --slug integration-demo --skip-wp-versions-check
+
+      - name: Update user password
+        run: vip dev-env exec -- wp user update vipgo --user_pass=password
 
       - name: Run E2E tests
         run: npm test
