@@ -13,6 +13,7 @@ test.describe('Set up', () => {
         try {
             const fd = await open(storagePath, constants.O_CREAT | constants.O_EXCL | constants.O_WRONLY, 0o644);
             await writeFile(fd, '{}');
+            await fd.close();
         } catch {
             // Do nothing, file exists
         }
