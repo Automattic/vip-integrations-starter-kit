@@ -1,8 +1,5 @@
 #!/bin/sh
 
-use-wptl latest
-if [ -d node_modules ]; then
-    npm install
-else
-    npm ci
+if [ "$(wp theme list --format=count)" = "0" ]; then
+    wp theme install --activate twentytwentyfive
 fi
