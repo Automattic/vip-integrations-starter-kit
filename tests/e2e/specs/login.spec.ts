@@ -18,7 +18,7 @@ test.describe('Login page', () => {
         const loginPage = new LoginPage(page);
         await loginPage.login('vipgo', 'password', true);
 
-        expect(page.url()).toMatch(/\/wp-admin\//ug);
+        await expect(page).toHaveURL((url) => url.pathname.includes('/wp-admin/'));
     });
 
     test('Login with invalid credentials', async ({ page }) => {
@@ -30,7 +30,7 @@ test.describe('Login page', () => {
 
     test('Visit Lost Password page', async ({ page }) => {
         const loginPage = new LoginPage(page);
-        const lostPasswordPage = await loginPage.lostPassword();
-        expect(lostPasswordPage.url).toMatch(/\/wp-login\.php\?action=lostpassword/ug);
+        await loginPage.lostPassword();
+        expect(page).toHaveURL((url) => url.pathname.includes('/wp-login.php') && url.searchParams.get('action') === 'lostpassword');
     });
 });
