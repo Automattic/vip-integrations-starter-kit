@@ -31,6 +31,6 @@ test.describe('Login page', () => {
     test('Visit Lost Password page', async ({ page }) => {
         const loginPage = new LoginPage(page);
         await loginPage.lostPassword();
-        expect(page).toHaveURL((url) => url.pathname.includes('/wp-login.php') && url.searchParams.get('action') === 'lostpassword');
+        await expect(page).toHaveURL((url) => url.pathname.includes('/wp-login.php') && url.searchParams.get('action') === 'lostpassword');
     });
 });
