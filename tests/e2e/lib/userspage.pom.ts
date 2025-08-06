@@ -7,6 +7,7 @@ export class UsersPage extends AdminPage {
     public readonly addUserLinkLocator: Locator;
     public readonly searchUsersInputLocator: Locator;
     public readonly searchSubmitButtonLocator: Locator;
+    public readonly noItemsLocator: Locator;
 
     public constructor(page: Page) {
         super(page);
@@ -15,15 +16,16 @@ export class UsersPage extends AdminPage {
         this.addUserLinkLocator = page.locator('a.page-title-action');
         this.searchUsersInputLocator = page.locator('input#user-search-input');
         this.searchSubmitButtonLocator = page.locator('input#search-submit');
+        this.noItemsLocator = page.locator('#the-list > .no-items');
     }
 
     public visit(): Promise<Response> {
-        return this.page.goto('/wp-admin/users.php') as Promise<Response>;
+        return this.page.goto('./wp-admin/users.php') as Promise<Response>;
     }
 
     public async editUserByID(id: number): Promise<BasePage> {
         await this.userRowLocator(id).locator('td.username > strong > a').click();
-        await this.page.waitForLoadState('load');
+        await this.page.waitForLoadState('domcontentloaded');
         return new BasePage(this.page);
     }
 
@@ -31,7 +33,7 @@ export class UsersPage extends AdminPage {
         const rowActionsLocator = this.userRowActionLocator(id)
         await rowActionsLocator.hover();
         await rowActionsLocator.locator(`span.${action} > a`).click();
-        await this.page.waitForLoadState('load');
+        await this.page.waitForLoadState('domcontentloaded');
         return new BasePage(this.page);
     }
 
@@ -50,12 +52,8 @@ export class UsersPage extends AdminPage {
     public async searchForUsers(search: string): Promise<this> {
         await this.searchUsersInputLocator.fill(search);
         await this.searchSubmitButtonLocator.click();
-        await this.page.waitForLoadState('load');
+        await this.page.waitForURL((url) => url.pathname.endsWith('/users.php'), { waitUntil: 'domcontentloaded' });
         return this;
-    }
-
-    public async usersFound(): Promise<boolean> {
-        return await this.page.locator('#the-list > .no-items').count() === 0;
     }
 
     private userRowLocator(id: number): Locator {
