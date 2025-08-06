@@ -9,7 +9,7 @@ test.describe('Admin Dashboard', () => {
         const adminPage = new AdminPage(page);
         await adminPage.visit();
         await page.waitForLoadState('domcontentloaded');
-        expect(page.url()).toContain('/wp-admin/');
+        await expect(page).toHaveURL((url) => url.pathname.includes('/wp-admin/'));
 
         await expect(adminPage.adminBar).toBeVisible();
         await expect(adminPage.versionText).toHaveText(/Version/u);
@@ -31,6 +31,6 @@ test.describe('Admin Dashboard', () => {
         const adminPage = new AdminPage(page);
         await adminPage.visit();
         const thePage = await adminPage.logOut();
-        expect(thePage.url).not.toContain('/wp-admin/');
+        await expect(thePage.page).not.toHaveURL((url) => url.pathname.includes('/wp-admin/'));
     });
 });
