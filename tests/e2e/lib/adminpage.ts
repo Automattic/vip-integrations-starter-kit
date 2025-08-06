@@ -83,7 +83,7 @@ export class AdminPage extends BasePage {
     public async logOut(): Promise<BasePage> {
         await this.secondaryMenu.hover();
         await this.adminBarLogOut.click();
-        await this.page.waitForLoadState('load');
+        await this.page.waitForLoadState('domcontentloaded');
 
         return new BasePage(this.page);
     }

@@ -62,9 +62,9 @@ export class LoginPage extends BasePage {
 
     public async lostPassword(): Promise<LostPasswordPage | Page> {
         await this.lostPasswordLink.click();
-        await this.page.waitForLoadState('load');
+        await this.page.waitForURL((url) => url.pathname.endsWith('/wp-login.php'), { waitUntil: 'domcontentloaded' });
         const url = new URL(this.page.url());
-        if (url.pathname.endsWith('/wp-login.php') && url.searchParams.get('action') === 'lostpassword') {
+        if (url.searchParams.get('action') === 'lostpassword') {
             return new LostPasswordPage(this.page);
         }
 

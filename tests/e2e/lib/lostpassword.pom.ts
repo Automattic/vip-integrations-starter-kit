@@ -42,7 +42,7 @@ export class LostPasswordPage extends BasePage {
     public async resetPassword(login: string): Promise<LostPasswordPage | ResetPasswordSuccessPage | BasePage> {
         await this.loginField.fill(login);
         await this.getPasswordButton.click();
-        await this.page.waitForLoadState('load');
+        await this.page.waitForURL((url) => url.pathname.endsWith('/wp-login.php'), { waitUntil: 'domcontentloaded' });
 
         const url = new URL(this.lastNavigationRequest?.url() ?? '');
         if (url.pathname.endsWith('/wp-login.php')) {

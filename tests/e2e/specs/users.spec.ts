@@ -1,20 +1,22 @@
-import { expect, test } from '@playwright/test';
+import { test as base, expect } from '@playwright/test';
 import { UsersPage } from '../lib/userspage.pom';
 
-test.describe('User List', () => {
-    let usersPage: UsersPage;
-    test.beforeEach(async ({ page }) => {
-        usersPage = new UsersPage(page);
+const test = base.extend<{ usersPage: UsersPage }>({
+    usersPage: async ({ page }, use) => {
+        const usersPage = new UsersPage(page);
         await usersPage.visit();
-    });
+        await use(usersPage);
+    }
+});
 
-    test('Search for vipgo', async ({ page }) => {
+test.describe('User List', () => {
+    test('Search for vipgo', async ({ usersPage }) => {
         await usersPage.searchForUsers('vipgo');
-        expect(await usersPage.usersFound()).toBe(true);
+        await expect(usersPage.noItemsLocator).toHaveCount(0);
     });
 
-    test('Search for non-existing user', async ({ page }) => {
+    test('Search for non-existing user', async ({ usersPage }) => {
         await usersPage.searchForUsers('this-user-does-not-exist');
-        expect(await usersPage.usersFound()).toBe(false);
+        await expect(usersPage.noItemsLocator).toHaveCount(1);
     });
 });
