@@ -22,7 +22,7 @@ jobs:
     name: Psalm
     steps:
       - name: Check out source code
-        uses: actions/checkout@ff7abcd0c3c05ccf6adc123a8cd1fd4fb30fb493 # v4.1.7
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v4.1.7
 
       - name: Set up PHP
         uses: shivammathur/setup-php@bf6b4fbd49ca58e4608c9c89fba0b8d90bd2a39f # 2.35.5
