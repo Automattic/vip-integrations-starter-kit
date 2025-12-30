@@ -8,7 +8,7 @@
   "description": "",
   "devDependencies": {
     "@playwright/test": "^1.45.3",
-    "@types/node": "^24.0.10"
+    "@types/node": "^25.0.3"
   },
   "scripts": {
     "test": "playwright test",
