@@ -47,11 +47,9 @@ jobs:
       - name: Install Node.js dependencies
         run: npm ci
 
-      - name: Install Playwright
-        run: npx playwright install
-
       - name: Install Playwright dependencies
-        run: sudo -E npx playwright install-deps
+        timeout-minutes: 10
+        run: sudo -E npx playwright install-deps chrome
 
       - name: Install VIP CLI
         run: npm install -g @automattic/vip

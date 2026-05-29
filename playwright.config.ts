@@ -12,7 +12,7 @@ if (process.env.E2E_URL) {
 const defaultSettings: PlaywrightTestProject['use'] = {
     storageState: '.playwright/state.json',
     ignoreHTTPSErrors: true,
-    video: 'retain-on-failure',
+    video: process.env.CI ? 'off' : 'retain-on-failure',
     trace: 'retain-on-failure',
 };
 
@@ -40,6 +40,7 @@ export default defineConfig({
     use: {
         /* Base URL to use in actions like `await page.goto('/')`. */
         baseURL: url,
+        channel: 'chrome',
         /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
         trace: 'on-first-retry',
     },
