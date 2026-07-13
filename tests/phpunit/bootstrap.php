@@ -2,6 +2,10 @@
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
+// The VIP Telemetry API ships with the platform's MU plugins and is absent
+// in bare PHPUnit runs; load a test double so the helper can be asserted.
+require_once __DIR__ . '/stubs/class-vip-telemetry.php';
+
 $_tests_dir = (string) getenv( 'WP_TESTS_DIR' );
 
 if ( ! $_tests_dir ) {
@@ -21,8 +25,13 @@ if ( ! defined( 'WPMU_PLUGIN_DIR' ) ) {
 /** @psalm-suppress UnresolvableInclude */
 require_once $_tests_dir . '/includes/functions.php';
 
+if ( ! defined( 'VIP_EXAMPLE_INTEGRATION_CONFIG' ) ) {
+	// Mirror the VIP platform: runtime config is defined before the plugin loads.
+	define( 'VIP_EXAMPLE_INTEGRATION_CONFIG', require __DIR__ . '/../../fixtures/config-valid.php' );
+}
+
 function _manually_load_plugin(): void {
-	require_once __DIR__ . '/../../index.php';
+	require_once __DIR__ . '/../../example-integration.php';
 }
 
 tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );

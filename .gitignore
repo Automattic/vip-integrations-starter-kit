@@ -11,3 +11,6 @@ Thumbs.db
 /.playwright/
 /coverage/
 /.phpunit.result.cache
+
+# Local runtime-config override (see fixtures/README.md)
+fixtures/config-local.php
