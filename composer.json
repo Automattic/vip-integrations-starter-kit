@@ -1,29 +1,29 @@
 {
-  "name": "automattic/my-integration",
+  "name": "example-vendor/example-integration",
   "type": "wordpress-plugin",
   "license": "MIT",
   "require": {
-      "php": "^8.1.0"
+      "php": "^8.2"
   },
   "autoload": {
     "classmap": ["inc/"]
   },
   "require-dev": {
     "automattic/vipwpcs": "^3",
-    "johnpbloch/wordpress-core": "^6.6",
-    "php-stubs/wordpress-stubs": "^6.6",
+    "johnpbloch/wordpress-core": "^6.9 || ^7.0",
+    "php-stubs/wordpress-stubs": "^6.9 || ^7.0",
     "phpcompatibility/phpcompatibility-wp": "^2",
-    "phpunit/phpunit": "^9",
+    "phpunit/phpunit": "^9.6",
     "psalm/plugin-phpunit": "^0.19.0",
     "vimeo/psalm": "^5.21.1",
     "wildwolf/wordpress-test-library-stubs": "^6.2",
-    "wp-phpunit/wp-phpunit": "^6.5",
+    "wp-phpunit/wp-phpunit": "^6.9 || ^7.0",
     "yoast/phpunit-polyfills": "^4.0"
   },
   "config": {
     "sort-packages": true,
     "platform": {
-        "php": "8.1"
+        "php": "8.2"
     },
     "allow-plugins": {
       "dealerdirect/phpcodesniffer-composer-installer": true
@@ -33,7 +33,21 @@
     "phpcs": "phpcs",
     "phpcbf": "phpcbf",
     "psalm": "psalm",
-    "test": "phpunit",
-    "test:coverage": "phpunit --coverage-html=coverage --coverage-text"
+    "setup": "@php bin/setup.php",
+    "test": [
+      "@test:unit",
+      "@test:e2e"
+    ],
+    "test:unit": "phpunit",
+    "test:e2e": "npm test",
+    "test:coverage": "phpunit --coverage-html=coverage --coverage-text",
+    "validate-integration": "@php bin/validate-integration.php"
+  },
+  "scripts-descriptions": {
+    "setup": "Rewrite the example prefix set to your integration's names",
+    "test": "Run PHPUnit and Playwright e2e tests (e2e needs a running vip dev-env)",
+    "test:unit": "Run PHPUnit tests only",
+    "test:e2e": "Run Playwright e2e tests only (needs a running vip dev-env)",
+    "validate-integration": "Run the VIP integration conformance validator (placeholder until VIP publishes it)"
   }
 }

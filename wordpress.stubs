@@ -18,6 +18,11 @@ namespace {
 	define( 'WP_CONTENT_DIR', '/wp/wp-content' );
 	define( 'WP_CONTENT_URL', 'http://localhost/wp-content/uploads' );
 
+	// Defined by the plugin entry file before any inc/ code runs.
+	define( 'VIP_EXAMPLE_INTEGRATION_LOADED', true );
+	define( 'VIP_EXAMPLE_INTEGRATION_VERSION', '1.0.0' );
+	define( 'VIP_EXAMPLE_INTEGRATION_FILE', '/wp/wp-content/plugins/example-integration/example-integration.php' );
+
 	class wpdb {
 
 		/** @var string */
