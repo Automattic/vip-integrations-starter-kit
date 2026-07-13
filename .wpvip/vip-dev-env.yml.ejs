@@ -1,8 +1,8 @@
 configuration-version: 1
-slug: integration-demo
+slug: example-integration
 title: Just another WordPress site
 php: 8.2
-wordpress: 6.7
+wordpress: 7.0
 app-code: demo
 # Update to the local path of MU-plugins when working on the integration loader code.
 mu-plugins: demo
@@ -20,7 +20,7 @@ overrides: |
         environment:
           WP_TESTS_DIR: /wp/wp-content/wordpress-tests-lib
         volumes:
-          - <%= configDir %>/..:/wp/wp-content/plugins/my-integration
+          - <%= configDir %>/..:/wp/wp-content/plugins/example-integration
           - <%= configDir %>/plugin-loader.php:/wp/wp-content/client-mu-plugins/plugin-loader.php
           - <%= configDir %>/empty:/wp/wp-content/empty
   tooling:
@@ -28,14 +28,14 @@ overrides: |
       service: php
       cmd:
         - /bin/bash -i
-      dir: /wp/wp-content/plugins/my-integration
+      dir: /wp/wp-content/plugins/example-integration
       user: www-data
       description: Run a development shell
 
     unit-tests:
       service: php
       cmd:
-        - composer test
-      dir: /wp/wp-content/plugins/my-integration
+        - composer test:unit
+      dir: /wp/wp-content/plugins/example-integration
       user: www-data
       description: Run unit tests

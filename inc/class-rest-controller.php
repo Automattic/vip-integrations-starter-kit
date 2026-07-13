@@ -1,13 +1,13 @@
 <?php
 
-namespace MyNamespace\TestDemo;
+namespace ExampleVendor\ExampleIntegration;
 
 use WP_REST_Request;
 use WP_REST_Response;
 use WP_REST_Server;
 
 final class REST_Controller {
-	public const NAMESPACE = 'wp-test-demo/v1';
+	public const NAMESPACE = 'example-integration/v1';
 
 	/** @var self|null */
 	private static $instance;
@@ -51,6 +51,9 @@ final class REST_Controller {
 	public function sum( WP_REST_Request $request ): WP_REST_Response {
 		$a = (int) $request->get_param( 'a' );
 		$b = (int) $request->get_param( 'b' );
+
+		// Usage metadata only — never secrets, content, or PII.
+		Telemetry::get_instance()->record_event( 'sum_requested', [ 'route' => 'sum' ] );
 
 		return rest_ensure_response( $a + $b );
 	}

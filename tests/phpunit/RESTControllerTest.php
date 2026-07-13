@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace MyNamespace\TestDemo;
+namespace ExampleVendor\ExampleIntegration;
 
 use Spy_REST_Server;
 use WP_REST_Request;
@@ -10,7 +10,7 @@ use WP_REST_Server;
 use WP_Test_REST_TestCase;
 
 /**
- * @covers \MyNamespace\TestDemo\REST_Controller
+ * @covers \ExampleVendor\ExampleIntegration\REST_Controller
  */
 class RESTControllerTest extends WP_Test_REST_TestCase {
 	/**

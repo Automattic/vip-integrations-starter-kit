@@ -1,15 +1,15 @@
 <?php
 declare(strict_types = 1);
 
-namespace MyNamespace\TestDemo;
+namespace ExampleVendor\ExampleIntegration;
 
 use LogicException;
 use WP_UnitTestCase;
 
 /**
  * @psalm-import-type SettingsArray from Settings
- * @covers \MyNamespace\TestDemo\Settings
- * @uses \MyNamespace\TestDemo\SettingsValidator::ensure_data_shape
+ * @covers \ExampleVendor\ExampleIntegration\Settings
+ * @uses \ExampleVendor\ExampleIntegration\SettingsValidator::ensure_data_shape
  */
 class SettingsTest extends WP_UnitTestCase {
 	public function test_defaults(): void {

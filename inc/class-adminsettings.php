@@ -1,9 +1,9 @@
 <?php
 
-namespace MyNamespace\TestDemo;
+namespace ExampleVendor\ExampleIntegration;
 
 final class AdminSettings {
-	const OPTION_GROUP = 'testdemo_settings';
+	const OPTION_GROUP = 'example_integration_settings';
 
 	/** @var self|null */
 	private static $instance;
@@ -43,14 +43,14 @@ final class AdminSettings {
 		$settings_section = 'general-settings';
 		add_settings_section(
 			$settings_section,
-			__( 'General Settings', 'test-demo' ),
+			__( 'General Settings', 'example-integration' ),
 			'__return_empty_string', // NOSONAR
 			Admin::OPTIONS_MENU_SLUG
 		);
 
 		add_settings_field(
 			'enabled',
-			__( 'Enable plugin', 'test-demo' ),
+			__( 'Enable plugin', 'example-integration' ),
 			[ $this->input_factory, 'checkbox' ],
 			Admin::OPTIONS_MENU_SLUG,
 			$settings_section,
@@ -61,7 +61,7 @@ final class AdminSettings {
 
 		add_settings_field(
 			'message',
-			__( 'Message', 'test-demo' ),
+			__( 'Message', 'example-integration' ),
 			[ $this->input_factory, 'input' ],
 			Admin::OPTIONS_MENU_SLUG,
 			$settings_section,
@@ -70,7 +70,7 @@ final class AdminSettings {
 				'required'  => true,
 				'help'      => __(
 					'Help text goes here.',
-					'test-demo'
+					'example-integration'
 				),
 			]
 		);

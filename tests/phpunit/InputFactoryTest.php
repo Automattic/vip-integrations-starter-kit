@@ -1,13 +1,13 @@
 <?php
 
-namespace MyNamespace\TestDemo;
+namespace ExampleVendor\ExampleIntegration;
 
 use WP_UnitTestCase;
 
 /**
  * @psalm-suppress MissingConstructor
  * @psalm-import-type InputArgs from InputFactory
- * @covers \MyNamespace\TestDemo\InputFactory
+ * @covers \ExampleVendor\ExampleIntegration\InputFactory
  */
 class InputFactoryTest extends WP_UnitTestCase {
 	/** @var InputFactory */
