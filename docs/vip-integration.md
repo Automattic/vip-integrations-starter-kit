@@ -28,7 +28,7 @@ dev-env container (`vip dev-env shell`) it is preconfigured.
 | Install Node dependencies | `npm ci` |
 | Build release assets | not applicable — this integration ships no compiled JS/CSS assets (`npm run build` documents this) |
 | Tests | `composer test` |
-| Integration validation | `composer run validate-integration` (placeholder until VIP publishes the validator) |
+| Integration validation | `composer run validate-integration` (runs `vip validate integration` via the VIP-CLI) |
 
 ## Runtime Config
 

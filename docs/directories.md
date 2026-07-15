@@ -8,7 +8,7 @@
 | `fixtures/` | Mock runtime configs for local development and tests (see `fixtures/README.md`). |
 | `tests/phpunit/` | PHPUnit tests (run through `composer test:unit`). |
 | `tests/e2e/` | Playwright end-to-end tests (run through `composer test:e2e`; needs a running `vip dev-env`). |
-| `bin/` | Repo tooling: `setup.php` scaffold and the `validate-integration.php` stub. |
+| `bin/` | Repo tooling: `setup.php` scaffold and the `validate-integration.php` conformance-checker wrapper. |
 | `docs/` | Operational docs, including the required `vip-integration.md`. |
 | `.wpvip/` | VIP local development environment config and plugin loader. |
 | `.devcontainer/` | GitHub Codespaces configuration. |
