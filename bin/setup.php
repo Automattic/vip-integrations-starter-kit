@@ -54,11 +54,13 @@ $replacements = [
 	'Example Vendor'                     => $vendor_words,
 ];
 
-$skip_patterns = '#^(vendor/|node_modules/|bin/setup\.php|composer\.lock|package-lock\.json|\.playwright/)|\.(png|jpg|jpeg|gif|webp)$#';
+// docs/ is skipped so the "Making it your own" token table keeps mapping the
+// example prefix to your names instead of being rewritten into your names.
+$skip_patterns = '#^(vendor/|node_modules/|docs/|bin/setup\.php|composer\.lock|package-lock\.json|\.playwright/)|\.(png|jpg|jpeg|gif|webp)$#';
 
 exec( 'git ls-files', $files, $exit_code );
 if ( 0 !== $exit_code ) {
-	fwrite( STDERR, "Failed to list files via git.\n" );
+	fwrite( STDERR, "Could not list files via 'git ls-files'. Run setup from a git clone of the Starter Kit — a downloaded ZIP has no git history and won't work.\n" );
 	exit( 1 );
 }
 
@@ -72,13 +74,19 @@ foreach ( $files as $file ) {
 	$updated  = strtr( $contents, $replacements );
 
 	if ( $updated !== $contents ) {
-		file_put_contents( $file, $updated );
+		if ( false === file_put_contents( $file, $updated ) ) {
+			fwrite( STDERR, "Failed to write {$file}. Rewrite aborted partway through — check file permissions and re-run on a clean checkout.\n" );
+			exit( 1 );
+		}
 		++$changed;
 	}
 }
 
 if ( file_exists( 'example-integration.php' ) ) {
-	rename( 'example-integration.php', "{$name_kebab}.php" );
+	if ( ! rename( 'example-integration.php', "{$name_kebab}.php" ) ) {
+		fwrite( STDERR, "Failed to rename entry file to {$name_kebab}.php.\n" );
+		exit( 1 );
+	}
 	fwrite( STDOUT, "Renamed entry file to {$name_kebab}.php\n" );
 }
 
