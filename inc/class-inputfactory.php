@@ -1,6 +1,6 @@
 <?php
 
-namespace MyNamespace\TestDemo;
+namespace ExampleVendor\ExampleIntegration;
 
 use ArrayAccess;
 

@@ -1,20 +1,20 @@
 <?php
 declare(strict_types = 1);
 
-namespace MyNamespace\TestDemo;
+namespace ExampleVendor\ExampleIntegration;
 
 use WP_UnitTestCase;
 
 /**
- * @covers MyNamespace\TestDemo\SettingsValidator
- * @uses \MyNamespace\TestDemo\Settings
- * @uses \MyNamespace\TestDemo\InputFactory::__construct
+ * @covers ExampleVendor\ExampleIntegration\SettingsValidator
+ * @uses \ExampleVendor\ExampleIntegration\Settings
+ * @uses \ExampleVendor\ExampleIntegration\InputFactory::__construct
  * @psalm-import-type SettingsArray from Settings
  */
 class SettingsValidatorTest extends WP_UnitTestCase {
 	/**
 	 * @dataProvider data_sanitize
-	 * @uses \MyNamespace\TestDemo\AdminSettings
+	 * @uses \ExampleVendor\ExampleIntegration\AdminSettings
 	 * @param mixed $value
 	 * @psalm-param SettingsArray $expected
 	 */

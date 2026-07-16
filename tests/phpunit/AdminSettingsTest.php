@@ -1,15 +1,15 @@
 <?php
 declare(strict_types = 1);
 
-namespace MyNamespace\TestDemo;
+namespace ExampleVendor\ExampleIntegration;
 
 use WP_UnitTestCase;
 
 /**
- * @covers \MyNamespace\TestDemo\AdminSettings
- * @uses \MyNamespace\TestDemo\InputFactory
- * @uses \MyNamespace\TestDemo\Settings
- * @uses \MyNamespace\TestDemo\SettingsValidator::ensure_data_shape
+ * @covers \ExampleVendor\ExampleIntegration\AdminSettings
+ * @uses \ExampleVendor\ExampleIntegration\InputFactory
+ * @uses \ExampleVendor\ExampleIntegration\Settings
+ * @uses \ExampleVendor\ExampleIntegration\SettingsValidator::ensure_data_shape
  */
 class AdminSettingsTest extends WP_UnitTestCase {
 	public static function setUpBeforeClass(): void {
@@ -35,7 +35,7 @@ class AdminSettingsTest extends WP_UnitTestCase {
 	 * @global mixed[] $wp_settings_sections
 	 * @global mixed[] $wp_settings_fields
 	 *
-	 * @uses MyNamespace\TestDemo\SettingsValidator::ensure_data_shape
+	 * @uses ExampleVendor\ExampleIntegration\SettingsValidator::ensure_data_shape
 	 */
 	public function test_construct(): void {
 		global $wp_settings_sections;

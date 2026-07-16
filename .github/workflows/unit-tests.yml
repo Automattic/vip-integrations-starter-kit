@@ -24,27 +24,29 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - { wp: 6.5.x,   ms: 'yes', php: '8.1' }
-          - { wp: 6.5.x,   ms: 'no',  php: '8.1' }
-          - { wp: latest,  ms: 'yes', php: '8.1' }
-          - { wp: latest,  ms: 'no',  php: '8.1' }
-          - { wp: latest,  ms: 'yes', php: '8.1' }
-          - { wp: nightly, ms: 'no',  php: '8.1' }
-          - { wp: nightly, ms: 'yes', php: '8.1' }
-
-          - { wp: 6.5.x,   ms: 'yes', php: '8.2' }
-          - { wp: 6.5.x,   ms: 'no',  php: '8.2' }
+          # VIP platform baseline: WordPress 7.0 (latest) and 6.9.x on PHP 8.2-8.5.
+          - { wp: 6.9.x,   ms: 'yes', php: '8.2' }
+          - { wp: 6.9.x,   ms: 'no',  php: '8.2' }
           - { wp: latest,  ms: 'no',  php: '8.2', coverage: 'yes' }
           - { wp: latest,  ms: 'yes', php: '8.2', coverage: 'yes' }
-          - { wp: nightly, ms: 'no',  php: '8.2' }
-          - { wp: nightly, ms: 'yes', php: '8.2' }
 
-          - { wp: 6.5.x,   ms: 'yes', php: '8.3' }
-          - { wp: 6.5.x,   ms: 'no',  php: '8.3' }
+          - { wp: 6.9.x,   ms: 'yes', php: '8.3' }
+          - { wp: 6.9.x,   ms: 'no',  php: '8.3' }
           - { wp: latest,  ms: 'no',  php: '8.3' }
           - { wp: latest,  ms: 'yes', php: '8.3' }
-          - { wp: nightly, ms: 'no',  php: '8.3' }
-          - { wp: nightly, ms: 'yes', php: '8.3' }
+
+          - { wp: 6.9.x,   ms: 'yes', php: '8.4' }
+          - { wp: 6.9.x,   ms: 'no',  php: '8.4' }
+          - { wp: latest,  ms: 'no',  php: '8.4' }
+          - { wp: latest,  ms: 'yes', php: '8.4' }
+
+          - { wp: 6.9.x,   ms: 'yes', php: '8.5' }
+          - { wp: 6.9.x,   ms: 'no',  php: '8.5' }
+          - { wp: latest,  ms: 'no',  php: '8.5' }
+          - { wp: latest,  ms: 'yes', php: '8.5' }
+
+          - { wp: nightly, ms: 'no',  php: '8.5' }
+          - { wp: nightly, ms: 'yes', php: '8.5' }
     services:
       mysql:
         image: mariadb:latest
@@ -106,6 +108,6 @@ jobs:
           if [ "${{ steps.coverage.outputs.coverage }}" != 'none' ]; then
             CMD=test:coverage
           else
-            CMD=test
+            CMD=test:unit
           fi
           composer "${CMD}" -- --order-by=random

@@ -1,6 +1,6 @@
 <?php
 
-namespace MyNamespace\TestDemo;
+namespace ExampleVendor\ExampleIntegration;
 
 /**
  * @psalm-import-type SettingsArray from Settings
