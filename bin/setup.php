@@ -54,9 +54,13 @@ $replacements = [
 	'Example Vendor'                     => $vendor_words,
 ];
 
-// docs/ is skipped so the "Making it your own" token table keeps mapping the
-// example prefix to your names instead of being rewritten into your names.
-$skip_patterns = '#^(vendor/|node_modules/|docs/|bin/setup\.php|composer\.lock|package-lock\.json|\.playwright/)|\.(png|jpg|jpeg|gif|webp)$#';
+$skip_patterns = '#^(vendor/|node_modules/|bin/setup\.php|composer\.lock|package-lock\.json|\.playwright/)|\.(png|jpg|jpeg|gif|webp)$#';
+
+// Everything from this heading onward is a reference token table that maps the
+// example prefix to your names, so it must keep the example tokens. It is the
+// one region left un-rewritten — the runtime-config docs above it are rewritten
+// like every other file so the documented config constant matches the code.
+$preserve_marker = '## Making it your own';
 
 exec( 'git ls-files', $files, $exit_code );
 if ( 0 !== $exit_code ) {
@@ -71,7 +75,10 @@ foreach ( $files as $file ) {
 	}
 
 	$contents = (string) file_get_contents( $file );
-	$updated  = strtr( $contents, $replacements );
+	$marker   = strpos( $contents, $preserve_marker );
+	$updated  = false === $marker
+		? strtr( $contents, $replacements )
+		: strtr( substr( $contents, 0, $marker ), $replacements ) . substr( $contents, $marker );
 
 	if ( $updated !== $contents ) {
 		if ( false === file_put_contents( $file, $updated ) ) {
