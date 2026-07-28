@@ -1,0 +1,70 @@
+# yaml-language-server: $schema=./a8c-manifest.schema.json
+#
+# Handoff manifest for the Example Integration.
+#
+# This is the single file WordPress VIP reads to register and load your
+# integration — VIP never sees your repo. `composer setup` (or `a8c-integration
+# init`) rewrites the example names below to yours. Fill in the rest, then check
+# it with `npx @automattic/a8c-integration validate`.
+#
+# See docs/manifest.md for a field-by-field guide, and a8c-manifest.schema.json
+# for the full schema (fields, types, and constraints).
+
+manifest_version: 1
+manifest_kind: vip-integration-handoff
+
+integration:
+  slug: example-integration
+  display_name: Example Integration
+  summary: Reference integration built from the VIP Integrations Starter Kit.
+  partner:
+    name: Example Vendor
+    support_contact: support@example.com
+
+documentation:
+  public_url: https://example.com/docs/example-integration
+  support_url: https://example.com/docs/example-integration/support
+
+runtime:
+  wordpress_plugin:
+    folder: example-integration
+    entry_file: example-integration.php
+    php_namespace: 'ExampleVendor\ExampleIntegration'
+    scope: site
+
+runtime_config:
+  constant_name: VIP_EXAMPLE_INTEGRATION_CONFIG
+  fields:
+    - key: api_base_url
+      label: API base URL
+      type: url
+      required: true
+      help: Base URL for the vendor API.
+    - key: api_token
+      label: API token
+      type: secret
+      required: true
+      help: Token used to authenticate vendor API requests. Stored encrypted.
+    - key: signature_label
+      label: Signature label
+      type: string
+      required: false
+      help: Text rendered in the site footer signature.
+
+telemetry:
+  prefix: example_integration_
+  default_properties:
+    - plugin_version
+  events:
+    - name: example_integration_sum_requested
+      type: tracks
+      trigger: The REST /sum endpoint serves a request.
+      properties:
+        - route
+      note: Usage metadata only — no request payload or config values.
+
+release:
+  plugin_version: 1.0.0
+  version_strategy: latest
+  migration_required: false
+  changelog: Initial VIP integration starter kit example.
