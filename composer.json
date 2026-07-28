@@ -40,14 +40,12 @@
     ],
     "test:unit": "phpunit",
     "test:e2e": "npm test",
-    "test:coverage": "phpunit --coverage-html=coverage --coverage-text",
-    "validate-integration": "@php bin/validate-integration.php"
+    "test:coverage": "phpunit --coverage-html=coverage --coverage-text"
   },
   "scripts-descriptions": {
     "setup": "Rewrite the example prefix set to your integration's names",
     "test": "Run PHPUnit and Playwright e2e tests (e2e needs a running vip dev-env)",
     "test:unit": "Run PHPUnit tests only",
-    "test:e2e": "Run Playwright e2e tests only (needs a running vip dev-env)",
-    "validate-integration": "Run the VIP integration conformance validator (placeholder until VIP publishes it)"
+    "test:e2e": "Run Playwright e2e tests only (needs a running vip dev-env)"
   }
 }

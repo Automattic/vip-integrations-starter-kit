@@ -22,13 +22,13 @@ dev-env container (`vip dev-env shell`) it is preconfigured.
 
 ## Build, Test, And Validate Commands
 
-| Purpose | Command |
-| --- | --- |
-| Install PHP dependencies | `composer install` |
-| Install Node dependencies | `npm ci` |
-| Build release assets | not applicable — this integration ships no compiled JS/CSS assets (`npm run build` documents this) |
-| Tests | `composer test` |
-| Integration validation | `composer run validate-integration` (placeholder until VIP publishes the validator) |
+| Purpose                   | Command                                                                                                        |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| Install PHP dependencies  | `composer install`                                                                                             |
+| Install Node dependencies | `npm ci`                                                                                                       |
+| Build release assets      | not applicable — this integration ships no compiled JS/CSS assets (`npm run build` documents this)             |
+| Tests                     | `composer test`                                                                                                |
+| Integration validation    | `npx @automattic/a8c-integration validate` (the external conformance checker — see [manifest.md](manifest.md)) |
 
 ## Runtime Config
 
@@ -77,8 +77,8 @@ environments without VIP MU plugins no-op. Event names are prefixed with
 `example_integration_`. Never include secrets, raw content, email addresses,
 or customer credentials in event properties.
 
-| Name | Type | Trigger | Properties | Notes |
-| --- | --- | --- | --- | --- |
+| Name                                | Type   | Trigger                                    | Properties                         | Notes                                    |
+| ----------------------------------- | ------ | ------------------------------------------ | ---------------------------------- | ---------------------------------------- |
 | `example_integration_sum_requested` | Tracks | The REST `/sum` endpoint serves a request. | `route`, `plugin_version` (global) | Usage metadata only; no request payload. |
 
 ## Making it your own
@@ -86,13 +86,13 @@ or customer credentials in event properties.
 `composer setup` rewrites the example prefix set to your integration's names
 via plain string replacement:
 
-| Token | Becomes |
-| --- | --- |
-| `example-integration` (slug, folder, text domain, entry file, REST namespace) | your integration slug |
-| `ExampleVendor\ExampleIntegration` (PHP namespace) | your vendor + integration namespace |
-| `VIP_EXAMPLE_INTEGRATION_*` (constants) | `VIP_<YOUR_NAME>_*` |
-| `example_integration_` (telemetry prefix, option keys) | `<your_name>_` |
-| `example-vendor/example-integration` (Composer name) | `<your-vendor>/<your-slug>` |
+| Token                                                                         | Becomes                             |
+| ----------------------------------------------------------------------------- | ----------------------------------- |
+| `example-integration` (slug, folder, text domain, entry file, REST namespace) | your integration slug               |
+| `ExampleVendor\ExampleIntegration` (PHP namespace)                            | your vendor + integration namespace |
+| `VIP_EXAMPLE_INTEGRATION_*` (constants)                                       | `VIP_<YOUR_NAME>_*`                 |
+| `example_integration_` (telemetry prefix, option keys)                        | `<your_name>_`                      |
+| `example-vendor/example-integration` (Composer name)                          | `<your-vendor>/<your-slug>`         |
 
 Run it interactively (`composer setup`) or non-interactively
 (`composer setup -- --vendor="Acme" --name="Content Sync"`).
