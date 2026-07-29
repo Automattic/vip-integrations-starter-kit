@@ -6,7 +6,7 @@ It contains an example of fully configured VIP local and cloud development envir
 
 Utilizing these tools will allow you to submit the new versions of your integrations and us to deploy the code with confidence.
 
-The kit implements the WordPress VIP integration requirements and doubles as a reference implementation: runtime config via a single VIP-provided constant, config fixtures, Tracks telemetry, `composer test`, and the [handoff manifest](/docs/manifest.md) VIP registers the integration from. See [/docs/vip-integration.md](/docs/vip-integration.md) for the operational details. Check conformance with the [`a8c-integration`](https://github.com/Automattic/integration) CLI (`npx @automattic/a8c-integration validate`).
+The kit implements the WordPress VIP integration requirements and doubles as a reference implementation: runtime config via a single VIP-provided constant, config fixtures, Tracks telemetry, `composer test`, and the [handoff manifest](/docs/manifest.md) VIP registers the integration from. See [/docs/vip-integration.md](/docs/vip-integration.md) for the operational details. Check conformance with the [`vip-integration`](https://github.com/Automattic/integration) CLI (`npx @automattic/vip-integration validate`).
 
 ## Technology
 

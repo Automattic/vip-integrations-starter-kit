@@ -28,7 +28,7 @@ dev-env container (`vip dev-env shell`) it is preconfigured.
 | Install Node dependencies | `npm ci`                                                                                                       |
 | Build release assets      | not applicable — this integration ships no compiled JS/CSS assets (`npm run build` documents this)             |
 | Tests                     | `composer test`                                                                                                |
-| Integration validation    | `npx @automattic/a8c-integration validate` (the external conformance checker — see [manifest.md](manifest.md)) |
+| Integration validation    | `npx @automattic/vip-integration validate` (the external conformance checker — see [manifest.md](manifest.md)) |
 
 ## Runtime Config
 
