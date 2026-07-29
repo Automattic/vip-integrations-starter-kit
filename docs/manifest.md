@@ -1,19 +1,19 @@
 # The handoff manifest
 
-`a8c-manifest.yaml` is the one file WordPress VIP uses to register and load your
+`vip-manifest.yaml` is the one file WordPress VIP uses to register and load your
 integration. VIP reads it, so everything VIP needs to wire up
 the plugin loader, the config form, and secret storage has to be declared here,
 correctly.
 
-This kit ships a filled-in example ([`a8c-manifest.yaml`](../a8c-manifest.yaml))
+This kit ships a filled-in example ([`vip-manifest.yaml`](../vip-manifest.yaml))
 and the schema it is validated against
-([`a8c-manifest.schema.json`](../a8c-manifest.schema.json)).
+([`vip-manifest.schema.json`](../vip-manifest.schema.json)).
 
 ```sh
-npx @automattic/a8c-integration validate
+npx @automattic/vip-integration validate
 ```
 
-`composer setup` (or `a8c-integration init`) rewrites the example names in the
+`composer setup` (or `vip-integration init`) rewrites the example names in the
 manifest to yours — slug, folder, entry file, namespace, and config constant —
 so most of the plumbing fields are filled in for you. You own the identity
 fields and the config schema.
@@ -122,7 +122,7 @@ Each entry in `events`:
 
 ## Keeping it honest
 
-The manifest is a contract. `a8c-integration validate` checks that it is present,
+The manifest is a contract. `vip-integration validate` checks that it is present,
 parses as YAML, and matches the schema exactly — including rejecting unknown or
 misspelled keys, since VIP loads your integration from these field names alone.
 It confirms the shape, not the values: that a URL resolves or a token is real is

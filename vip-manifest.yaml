@@ -1,13 +1,13 @@
-# yaml-language-server: $schema=./a8c-manifest.schema.json
+# yaml-language-server: $schema=./vip-manifest.schema.json
 #
 # Handoff manifest for the Example Integration.
 #
 # This is the single file WordPress VIP reads to register and load your
-# integration — VIP never sees your repo. `composer setup` (or `a8c-integration
+# integration — VIP never sees your repo. `composer setup` (or `vip-integration
 # init`) rewrites the example names below to yours. Fill in the rest, then check
-# it with `npx @automattic/a8c-integration validate`.
+# it with `npx @automattic/vip-integration validate`.
 #
-# See docs/manifest.md for a field-by-field guide, and a8c-manifest.schema.json
+# See docs/manifest.md for a field-by-field guide, and vip-manifest.schema.json
 # for the full schema (fields, types, and constraints).
 
 manifest_version: 1

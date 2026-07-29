@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://automattic.github.io/vip-integration/a8c-manifest.schema.json",
+  "$id": "https://automattic.github.io/vip-integration/vip-manifest.schema.json",
   "title": "WordPress VIP Integration Handoff Manifest",
   "description": "The single file a partner fills in so VIP can register and load their integration without reading the plugin source.",
   "type": "object",

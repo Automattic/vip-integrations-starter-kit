@@ -12,9 +12,9 @@ Center. It doubles as the reference implementation of the VIP integration
 requirements. The example integration exposes a small REST endpoint and reads
 its settings from a single VIP-provided config constant.
 
-A partner runs `composer setup` (or `a8c-integration init`) to rewrite the
+A partner runs `composer setup` (or `vip-integration init`) to rewrite the
 example names to theirs, writes their code under `inc/`, fills in
-`a8c-manifest.yaml`, and validates with `a8c-integration validate` before
+`vip-manifest.yaml`, and validates with `vip-integration validate` before
 submitting.
 
 ## Map
@@ -26,8 +26,8 @@ submitting.
 | `views/`                                          | Admin page templates.                                                                                      |
 | `fixtures/`                                       | Mock runtime configs for local dev and tests — see `fixtures/README.md`.                                   |
 | `tests/phpunit/`, `tests/e2e/`                    | PHPUnit and Playwright tests.                                                                              |
-| `a8c-manifest.yaml`                               | The handoff manifest VIP registers the integration from.                                                   |
-| `a8c-manifest.schema.json`                        | JSON Schema the manifest is validated against.                                                             |
+| `vip-manifest.yaml`                               | The handoff manifest VIP registers the integration from.                                                   |
+| `vip-manifest.schema.json`                        | JSON Schema the manifest is validated against.                                                             |
 | `bin/setup.php`                                   | The `composer setup` prefix-rewrite scaffolder.                                                            |
 | `docs/`                                           | Human docs. Start with `docs/vip-integration.md`.                                                          |
 | `.wpvip/`, `.devcontainer/`, `.github/workflows/` | VIP dev-env, Codespaces, and CI.                                                                           |
@@ -73,7 +73,7 @@ Read config only through `inc/class-config.php`. It reads the single
 VIP-provided constant, validates it, and exposes `is_ready()` /
 `missing_fields()` style accessors. New settings are added by:
 
-1. declaring the field in `a8c-manifest.yaml` (and its schema), and
+1. declaring the field in `vip-manifest.yaml` (and its schema), and
 2. reading it through `Config` — never touching the constant directly elsewhere.
 
 Whatever you add to `Config`, keep the graceful-degradation contract: with
@@ -87,7 +87,7 @@ Record events through `inc/class-telemetry.php` only. It wraps the VIP Tracks
 API behind a `class_exists` guard so non-VIP environments no-op. Event names are
 prefixed with the integration's snake_case name. Properties carry usage metadata
 only — never secrets, request payloads, emails, or credentials. Declare every
-event in the `telemetry` section of `a8c-manifest.yaml`.
+event in the `telemetry` section of `vip-manifest.yaml`.
 
 ### Tests
 
@@ -98,10 +98,10 @@ event in the `telemetry` section of `a8c-manifest.yaml`.
 
 ### Manifest
 
-`a8c-manifest.yaml` must stay in sync with the code: the constant name, the
+`vip-manifest.yaml` must stay in sync with the code: the constant name, the
 plugin folder/entry file/namespace, every config `key` the plugin reads, and the
-telemetry events it records. The schema (`a8c-manifest.schema.json`) rejects
-unknown keys, so a typo fails validation — run `a8c-integration validate` after
+telemetry events it records. The schema (`vip-manifest.schema.json`) rejects
+unknown keys, so a typo fails validation — run `vip-integration validate` after
 editing it. See `docs/manifest.md` for the field-by-field guide.
 
 ## Commands
@@ -144,14 +144,14 @@ composer psalm          # static analysis
 
 ### Validate the integration
 
-Conformance is checked by the external `a8c-integration` CLI (not a composer
+Conformance is checked by the external `vip-integration` CLI (not a composer
 script in this repo). Run it from the repo root:
 
 ```sh
-npx @automattic/a8c-integration validate            # human report
-npx @automattic/a8c-integration validate --format json   # for CI
+npx @automattic/vip-integration validate            # human report
+npx @automattic/vip-integration validate --format json   # for CI
 ```
 
 It exits non-zero when the integration is not conformant, so it can gate CI.
-Among other rules it validates `a8c-manifest.yaml` against
-`a8c-manifest.schema.json` — see `docs/manifest.md`.
+Among other rules it validates `vip-manifest.yaml` against
+`vip-manifest.schema.json` — see `docs/manifest.md`.
