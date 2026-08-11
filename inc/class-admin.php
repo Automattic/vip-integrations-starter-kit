@@ -16,14 +16,17 @@ final class Admin {
 		return self::$instance;
 	}
 
-	private function __construct() {
-		$this->init();
+	/**
+	 * Register the admin UI with WordPress.
+	 */
+	public static function register(): void {
+		self::get_instance()->init();
 	}
 
 	public function init(): void {
 		add_action( 'admin_menu', [ $this, 'admin_menu' ] );
 		add_action( 'admin_init', [ $this, 'admin_init' ] );
-		add_action( 'admin_init', [ AdminSettings::class, 'get_instance' ] );
+		add_action( 'admin_init', [ AdminSettings::class, 'register' ] );
 	}
 
 	public function admin_init(): void {

@@ -32,19 +32,20 @@ class AdminSettingsTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * register_settings() registers the setting, its section, and its fields.
+	 *
 	 * @global mixed[] $wp_settings_sections
 	 * @global mixed[] $wp_settings_fields
-	 *
-	 * @uses ExampleVendor\ExampleIntegration\SettingsValidator::ensure_data_shape
 	 */
-	public function test_construct(): void {
+	public function test_register_settings(): void {
 		global $wp_settings_sections;
 		global $wp_settings_fields;
 
 		/** @psalm-var array<string, array<string, mixed>> $wp_settings_sections */
 		/** @psalm-var array<string, array<string, mixed>> $wp_settings_fields */
 
-		AdminSettings::get_instance()->register_settings();
+		$admin_settings = new AdminSettings( new InputFactory( Settings::OPTIONS_KEY, Settings::get_instance() ) );
+		$admin_settings->register_settings();
 
 		self::assertArrayHasKey( Admin::OPTIONS_MENU_SLUG, $wp_settings_sections );
 		self::assertArrayHasKey( 'general-settings', $wp_settings_sections[ Admin::OPTIONS_MENU_SLUG ] );
@@ -54,6 +55,22 @@ class AdminSettingsTest extends WP_UnitTestCase {
 
 		self::assertArrayHasKey( 'enabled', $wp_settings_fields[ Admin::OPTIONS_MENU_SLUG ]['general-settings'] );
 		self::assertArrayHasKey( 'message', $wp_settings_fields[ Admin::OPTIONS_MENU_SLUG ]['general-settings'] );
+	}
+
+	/**
+	 * register() registers the settings and reuses a single instance.
+	 *
+	 * @global mixed[] $wp_settings_fields
+	 */
+	public function test_register(): void {
+		global $wp_settings_fields;
+
+		/** @psalm-var array<string, array<string, mixed>> $wp_settings_fields */
+
+		AdminSettings::register();
+
+		self::assertArrayHasKey( Admin::OPTIONS_MENU_SLUG, $wp_settings_fields );
+		self::assertSame( AdminSettings::get_instance(), AdminSettings::get_instance() );
 	}
 
 	public function testSettingsPage_guest(): void {

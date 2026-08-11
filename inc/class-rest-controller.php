@@ -20,8 +20,11 @@ final class REST_Controller {
 		return self::$instance;
 	}
 
-	private function __construct() {
-		$this->register_routes();
+	/**
+	 * Register the plugin's REST API routes.
+	 */
+	public static function register(): void {
+		self::get_instance()->register_routes();
 	}
 
 	public function register_routes(): void {

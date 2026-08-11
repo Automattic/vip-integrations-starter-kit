@@ -24,12 +24,13 @@ class AdminTest extends WP_UnitTestCase {
 		wp_set_current_user( static::$admin_id );
 	}
 
-	public function test_construct(): void {
+	public function test_register(): void {
+		Admin::register();
 		$admin = Admin::get_instance();
-		$admin->init();
 
 		static::assertEquals( 10, has_action( 'admin_init', [ $admin, 'admin_init' ] ) );
 		static::assertEquals( 10, has_action( 'admin_menu', [ $admin, 'admin_menu' ] ) );
+		static::assertEquals( 10, has_action( 'admin_init', [ AdminSettings::class, 'register' ] ) );
 	}
 
 	public function test_admin_init(): void {

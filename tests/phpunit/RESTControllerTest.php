@@ -24,7 +24,7 @@ class RESTControllerTest extends WP_Test_REST_TestCase {
 
 		$wp_rest_server = new Spy_REST_Server();
 		do_action( 'rest_api_init', $wp_rest_server );
-		REST_Controller::get_instance()->register_routes();
+		REST_Controller::register();
 
 		wp_set_current_user( 1 );
 	}

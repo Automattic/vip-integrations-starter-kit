@@ -16,16 +16,21 @@ final class Plugin {
 		return self::$instance;
 	}
 
-	private function __construct() {
+	/**
+	 * Register the plugin's hooks with WordPress.
+	 *
+	 * The plugin entry file calls this during load.
+	 */
+	public function register(): void {
 		add_action( 'init', [ $this, 'init' ] );
 		if ( is_admin() ) {
-			add_action( 'init', [ Admin::class, 'get_instance' ] );
+			add_action( 'init', [ Admin::class, 'register' ] );
 		}
 	}
 
 	public function init(): void {
 		if ( Config::get_instance()->is_ready() ) {
-			add_action( 'rest_api_init', [ REST_Controller::class, 'get_instance' ] );
+			add_action( 'rest_api_init', [ REST_Controller::class, 'register' ] );
 		} else {
 			// Missing or incomplete runtime config must never fatal: disable the
 			// config-dependent behavior and surface a diagnostic instead.
