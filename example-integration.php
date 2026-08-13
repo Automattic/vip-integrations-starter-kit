@@ -26,4 +26,4 @@ define( 'VIP_EXAMPLE_INTEGRATION_FILE', __FILE__ );
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-Plugin::get_instance();
+Plugin::get_instance()->register();

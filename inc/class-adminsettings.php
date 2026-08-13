@@ -8,29 +8,32 @@ final class AdminSettings {
 	/** @var self|null */
 	private static $instance;
 
+	/** @var InputFactory */
+	private $input_factory;
+
 	public static function get_instance(): self {
 		if ( ! self::$instance ) {
-			// @codeCoverageIgnoreStart
-			// Depending on the test order, this may not be testable
-			self::$instance = new self();
-			// @codeCoverageIgnoreEnd
+			self::$instance = new self( new InputFactory( Settings::OPTIONS_KEY, Settings::get_instance() ) );
 		}
 
 		return self::$instance;
 	}
 
-	/** @var InputFactory */
-	private $input_factory;
+	/**
+	 * Register the plugin's setting, section, and fields.
+	 */
+	public static function register(): void {
+		self::get_instance()->register_settings();
+	}
 
 	/**
-	 * @codeCoverageIgnore -- coverage depends on the test order
+	 * @param InputFactory $input_factory Renders the settings fields.
 	 */
-	private function __construct() {
-		$this->register_settings();
+	public function __construct( InputFactory $input_factory ) {
+		$this->input_factory = $input_factory;
 	}
 
 	public function register_settings(): void {
-		$this->input_factory = new InputFactory( Settings::OPTIONS_KEY, Settings::get_instance() );
 		register_setting(
 			self::OPTION_GROUP,
 			Settings::OPTIONS_KEY,
