@@ -1,10 +1,10 @@
 # VIP Integration
 
-Example Integration is the reference implementation of a WordPress VIP partner
-integration, built from the [VIP Integrations Starter Kit](https://github.com/Automattic/vip-integrations-starter-kit).
-It demonstrates the patterns WordPress VIP requires of partner integrations: a single runtime config constant read through a central `Config`
-class, graceful degradation when required config is missing, and Tracks-only
-telemetry through the VIP Telemetry API.
+Example Integration is built from the [VIP Integrations Starter Kit](https://github.com/Automattic/vip-integrations-starter-kit)
+and follows the patterns WordPress VIP requires of partner integrations: a
+single runtime config constant read through a central `Config` class, graceful
+degradation when required config is missing, and Tracks-only telemetry through
+the VIP Telemetry API.
 
 ## Running and testing locally
 
@@ -93,6 +93,25 @@ via plain string replacement:
 | `VIP_EXAMPLE_INTEGRATION_*` (constants)                                       | `VIP_<YOUR_NAME>_*`                 |
 | `example_integration_` (telemetry prefix, option keys)                        | `<your_name>_`                      |
 | `example-vendor/example-integration` (Composer name)                          | `<your-vendor>/<your-slug>`         |
+| `Example Integration` (display name, plugin name, UI strings)                 | your integration name, title case   |
+| `Example Vendor` (plugin author, manifest partner name)                       | your vendor name, title case        |
 
 Run it interactively (`composer setup`) or non-interactively
 (`composer setup -- --vendor="Acme" --name="Content Sync"`).
+
+### What setup cannot fill in
+
+The rewrite only derives tokens from the vendor and integration names you give
+it, so prose and contact details are left as the kit's examples. Work through
+these before handing off:
+
+| Where                    | What                                                                        |
+| ------------------------ | --------------------------------------------------------------------------- |
+| `vip-manifest.yaml`      | `integration.summary` — the one-line description shown on the catalog card. |
+| `vip-manifest.yaml`      | `integration.partner.support_contact` — still `support@example.com`.        |
+| `vip-manifest.yaml`      | `documentation.public_url` and `support_url` — still `example.com` URLs.    |
+| `<your-slug>.php`        | `Description` in the plugin header — still describes the Starter Kit.       |
+| `README.md`, `AGENTS.md` | Both still introduce the repo as the Starter Kit, not your integration.     |
+
+`npx @automattic/vip-integration validate` passes with the example values in
+place, so it will not catch these for you.
