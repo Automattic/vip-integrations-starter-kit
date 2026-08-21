@@ -5,7 +5,7 @@ updates:
     schedule:
       interval: "weekly"
     labels:
-      - "[Status] Needs Review"
+      - "dependencies"
 
   - package-ecosystem: "composer"
     directory: "/"
@@ -13,7 +13,7 @@ updates:
       interval: "weekly"
     versioning-strategy: "increase-if-necessary"
     labels:
-      - "[Status] Needs Review"
+      - "dependencies"
 
   - package-ecosystem: "npm"
     directory: "/"
@@ -21,4 +21,4 @@ updates:
       interval: "weekly"
     versioning-strategy: "increase-if-necessary"
     labels:
-      - "[Status] Needs Review"
+      - "dependencies"
