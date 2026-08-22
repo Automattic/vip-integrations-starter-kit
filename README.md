@@ -78,6 +78,8 @@ npm i
 composer setup
 ```
 
+Setup finishes by listing the example values it cannot derive from your names — the manifest summary, support contact and documentation URLs, the plugin header description, and this README. Work through that list before submitting: the conformance checker passes with those values still in place, so nothing downstream will flag them. See [Making it your own](/docs/vip-integration.md#making-it-your-own) for the full table.
+
 6. Create and start a WPVIP local development instance:
 
 ```sh

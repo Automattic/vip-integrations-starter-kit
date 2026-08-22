@@ -99,12 +99,88 @@ if ( file_exists( 'example-integration.php' ) ) {
 
 fwrite( STDOUT, "Rewrote {$changed} file(s).\n" );
 fwrite( STDOUT, "Prefix set: slug={$name_kebab}, namespace={$vendor_pascal}\\{$name_pascal}, constant=VIP_{$name_upper}_CONFIG\n" );
+
+$outstanding = outstanding_examples( "{$name_kebab}.php" );
+
+if ( [] !== $outstanding ) {
+	fwrite( STDOUT, "\nStill the kit's example values — a name rewrite cannot derive these:\n" );
+
+	foreach ( $outstanding as $file => $descriptions ) {
+		fwrite( STDOUT, "  {$file}\n" );
+
+		foreach ( $descriptions as $description ) {
+			fwrite( STDOUT, "    - {$description}\n" );
+		}
+	}
+
+	fwrite( STDOUT, "  `vip-integration validate` reports a conformant integration with these\n" );
+	fwrite( STDOUT, "  left in place, so it will not catch them for you.\n\n" );
+}
+
+$steps = [ 'Review the changes: git diff' ];
+
+if ( [] !== $outstanding ) {
+	$steps[] = 'Replace the example values listed above';
+}
+
+$steps[] = 'Refresh the Composer lock hash: composer update --lock';
+$steps[] = 'Recreate your local environment if one exists: vip dev-env destroy && vip dev-env create';
+
 fwrite( STDOUT, "Next steps:\n" );
-fwrite( STDOUT, "  1. Review the changes: git diff\n" );
-fwrite( STDOUT, "  2. Refresh the Composer lock hash: composer update --lock\n" );
-fwrite( STDOUT, "  3. Recreate your local environment if one exists: vip dev-env destroy && vip dev-env create\n" );
+
+foreach ( $steps as $index => $step ) {
+	fwrite( STDOUT, sprintf( "  %d. %s\n", $index + 1, $step ) );
+}
 
 exit( 0 );
+
+/**
+ * Example values that outlive the rewrite because they are prose and contact
+ * details rather than names derived from the vendor and integration.
+ *
+ * Each needle is deliberately absent from the replacement map above, so it
+ * survives setup and stops matching only once the value is genuinely replaced.
+ * Re-running setup after that reports nothing for it.
+ *
+ * @param string $entry_file The renamed plugin entry file.
+ * @return array<string, list<string>> Descriptions of what to replace, keyed by file.
+ */
+function outstanding_examples( string $entry_file ): array {
+	$checks = [
+		'vip-manifest.yaml' => [
+			'Reference integration built from the VIP Integrations Starter Kit.' => 'integration.summary — the one-line description on the catalog card',
+			'support@example.com'                                               => 'integration.partner.support_contact',
+			'https://example.com'                                               => 'documentation.public_url and documentation.support_url',
+		],
+		$entry_file         => [
+			'built from the VIP Integrations Starter Kit' => 'Description in the plugin header',
+		],
+		'README.md'         => [
+			'# WordPress VIP Integration Starter Kit' => 'still introduces the repo as the Starter Kit, not your integration',
+		],
+		'AGENTS.md'         => [
+			'The **WordPress VIP Integration Starter Kit**' => 'still describes the repo as the Starter Kit, not your integration',
+		],
+	];
+
+	$outstanding = [];
+
+	foreach ( $checks as $file => $needles ) {
+		if ( ! is_file( $file ) ) {
+			continue;
+		}
+
+		$contents = (string) file_get_contents( $file );
+
+		foreach ( $needles as $needle => $description ) {
+			if ( str_contains( $contents, $needle ) ) {
+				$outstanding[ $file ][] = $description;
+			}
+		}
+	}
+
+	return $outstanding;
+}
 
 function prompt( string $label ): string {
 	fwrite( STDOUT, "{$label}: " );
