@@ -9,8 +9,8 @@ matches your task.
 The **WordPress VIP Integration Starter Kit**: a complete, runnable WordPress VIP
 plugin that a partner clones to build an integration for the VIP Integration
 Center. It doubles as the reference implementation of the VIP integration
-requirements. The example integration exposes a small REST endpoint and reads
-its settings from a single VIP-provided config constant.
+requirements. The plugin exposes a small REST endpoint and reads its settings
+from a single VIP-provided config constant.
 
 A partner runs `composer setup` (or `vip-integration init`) to rewrite the
 example names to theirs, writes their code under `inc/`, fills in

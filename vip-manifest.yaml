@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=./vip-manifest.schema.json
 #
-# Handoff manifest for the Example Integration.
+# Handoff manifest for Example Integration.
 #
 # This is the single file WordPress VIP reads to register and load your
 # integration — VIP never sees your repo. `composer setup` (or `vip-integration
