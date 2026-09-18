@@ -74,12 +74,18 @@ wired in.
 Telemetry uses the helper in `inc/class-telemetry.php`, which wraps the VIP
 Telemetry API (Tracks events only, no Stats) behind a `class_exists` guard so
 environments without VIP MU plugins no-op. Event names are prefixed with
-`example_integration_`. Never include secrets, raw content, email addresses,
+`exampleintegration_`. Never include secrets, raw content, email addresses,
 or customer credentials in event properties.
 
-| Name                                | Type   | Trigger                                    | Properties                         | Notes                                    |
-| ----------------------------------- | ------ | ------------------------------------------ | ---------------------------------- | ---------------------------------------- |
-| `example_integration_sum_requested` | Tracks | The REST `/sum` endpoint serves a request. | `route`, `plugin_version` (global) | Usage metadata only; no request payload. |
+A Tracks prefix is **a single word plus a trailing underscore**. Event names are
+`<prefix><event>`, so the prefix has to read as one token identifying the
+product: squash a multi-word integration name rather than joining its words with
+underscores — `exampleintegration_`, not `example_integration_`. `composer setup`
+does this for you, so "Content Sync" becomes `contentsync_`.
+
+| Name                               | Type   | Trigger                                    | Properties                         | Notes                                    |
+| ---------------------------------- | ------ | ------------------------------------------ | ---------------------------------- | ---------------------------------------- |
+| `exampleintegration_sum_requested` | Tracks | The REST `/sum` endpoint serves a request. | `route`, `plugin_version` (global) | Usage metadata only; no request payload. |
 
 ## Making it your own
 
@@ -91,7 +97,8 @@ via plain string replacement:
 | `example-integration` (slug, folder, text domain, entry file, REST namespace) | your integration slug               |
 | `ExampleVendor\ExampleIntegration` (PHP namespace)                            | your vendor + integration namespace |
 | `VIP_EXAMPLE_INTEGRATION_*` (constants)                                       | `VIP_<YOUR_NAME>_*`                 |
-| `example_integration_` (telemetry prefix, option keys)                        | `<your_name>_`                      |
+| `exampleintegration` (telemetry prefix, single word)                          | `<yourname>`                        |
+| `example_integration` (option keys, snake_case identifiers)                   | `<your_name>`                       |
 | `example-vendor/example-integration` (Composer name)                          | `<your-vendor>/<your-slug>`         |
 | `Example Integration` (display name, plugin name, UI strings)                 | your integration name, title case   |
 | `Example Vendor` (plugin author, manifest partner name)                       | your vendor name, title case        |

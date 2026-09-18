@@ -85,8 +85,11 @@ and invalid states — wire new cases in there.
 
 Record events through `inc/class-telemetry.php` only. It wraps the VIP Tracks
 API behind a `class_exists` guard so non-VIP environments no-op. Event names are
-prefixed with the integration's snake_case name. Properties carry usage metadata
-only — never secrets, request payloads, emails, or credentials. Declare every
+prefixed with the integration's name squashed to a **single word** plus a
+trailing underscore (`exampleintegration_`, never `example_integration_`) — the
+Tracks prefix is one token, unlike the snake_case used for option keys.
+Properties carry usage metadata only — never secrets, request payloads, emails,
+or credentials. Declare every
 event in the `telemetry` section of `vip-manifest.yaml`.
 
 ### Tests

@@ -52,11 +52,11 @@ runtime_config:
       help: Text rendered in the site footer signature.
 
 telemetry:
-  prefix: example_integration_
+  prefix: exampleintegration_
   default_properties:
     - plugin_version
   events:
-    - name: example_integration_sum_requested
+    - name: exampleintegration_sum_requested
       type: tracks
       trigger: The REST /sum endpoint serves a request.
       properties:

@@ -13,7 +13,16 @@ namespace ExampleVendor\ExampleIntegration;
  * event properties.
  */
 final class Telemetry {
-	public const EVENT_PREFIX = 'example_integration_';
+	/**
+	 * Tracks event prefix: a single word plus a trailing underscore.
+	 *
+	 * Event names are `<prefix><event>`, so the prefix identifies the product as
+	 * one token. Squash a multi-word integration name into one word rather than
+	 * joining it with underscores — `exampleintegration_`, not
+	 * `example_integration_` — otherwise the product name reads as part of the
+	 * event name.
+	 */
+	public const EVENT_PREFIX = 'exampleintegration_';
 
 	/** @var self|null */
 	private static $instance;
