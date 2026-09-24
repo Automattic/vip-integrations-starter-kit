@@ -30,7 +30,7 @@ final class Config {
 	private bool $available = false;
 
 	public static function get_instance(): self {
-		if ( ! self::$instance ) {
+		if ( null === self::$instance ) {
 			self::$instance = new self( defined( self::CONSTANT_NAME ) ? constant( self::CONSTANT_NAME ) : null );
 		}
 
@@ -43,7 +43,7 @@ final class Config {
 	 */
 	public function __construct( $raw ) {
 		if ( is_array( $raw ) ) {
-			/** @psalm-var array<string, mixed> $raw */
+			/** @var array<string, mixed> $raw */
 			$this->config    = $raw;
 			$this->available = true;
 		}

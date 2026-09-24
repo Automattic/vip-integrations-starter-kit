@@ -3,12 +3,12 @@
 namespace ExampleVendor\ExampleIntegration;
 
 /**
- * @psalm-import-type SettingsArray from Settings
+ * @phpstan-import-type SettingsArray from Settings
  */
 abstract class SettingsValidator {
 	/**
-	 * @psalm-param mixed[] $settings
-	 * @psalm-return SettingsArray
+	 * @param mixed[] $settings
+	 * @return SettingsArray
 	 */
 	public static function ensure_data_shape( array $settings ): array {
 		$defaults = Settings::defaults();
@@ -28,13 +28,13 @@ abstract class SettingsValidator {
 			}
 		}
 
-		/** @psalm-var SettingsArray */
+		/** @var SettingsArray */
 		return $result;
 	}
 
 	/**
 	 * @param mixed $settings
-	 * @psalm-return SettingsArray $settings
+	 * @return SettingsArray
 	 */
 	public static function sanitize( $settings ): array {
 		if ( is_array( $settings ) ) {

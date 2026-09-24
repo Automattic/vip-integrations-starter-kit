@@ -9,7 +9,7 @@ final class Plugin {
 	// @codeCoverageIgnoreStart
 	// This code is executed in bootstrap.php, before PHPUnit initializes test coverage
 	public static function get_instance(): self {
-		if ( ! self::$instance ) {
+		if ( null === self::$instance ) {
 			self::$instance = new self();
 		}
 
@@ -72,7 +72,11 @@ final class Plugin {
 	}
 
 	public function wp_footer(): void {
-		$label = (string) Config::get_instance()->get( 'signature_label', 'Example Integration' );
+		$label = Config::get_instance()->get( 'signature_label' );
+		if ( ! is_string( $label ) ) {
+			$label = 'Example Integration';
+		}
+
 		printf( '<p class="example-integration-signature">%s</p>', esc_html( $label ) );
 	}
 }

@@ -22,7 +22,7 @@ final class Telemetry {
 	private $client;
 
 	public static function get_instance(): self {
-		if ( ! self::$instance ) {
+		if ( null === self::$instance ) {
 			self::$instance = new self();
 		}
 
@@ -45,7 +45,7 @@ final class Telemetry {
 	 * @param array<string, mixed> $properties
 	 */
 	public function record_event( string $event_name, array $properties = [] ): void {
-		if ( $this->client ) {
+		if ( null !== $this->client ) {
 			$this->client->record_event( $event_name, $properties );
 		}
 	}

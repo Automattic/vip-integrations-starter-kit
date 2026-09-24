@@ -7,7 +7,7 @@ use LogicException;
 use WP_UnitTestCase;
 
 /**
- * @psalm-import-type SettingsArray from Settings
+ * @phpstan-import-type SettingsArray from Settings
  * @covers \ExampleVendor\ExampleIntegration\Settings
  * @uses \ExampleVendor\ExampleIntegration\SettingsValidator::ensure_data_shape
  */

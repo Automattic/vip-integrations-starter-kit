@@ -15,10 +15,16 @@ class TelemetryTest extends WP_UnitTestCase {
 
 		Telemetry::get_instance()->record_event( 'unit_test_event', [ 'foo' => 'bar' ] );
 
-		static::assertCount( 1, VIP_Telemetry::$events );
-		static::assertSame( Telemetry::EVENT_PREFIX, VIP_Telemetry::$events[0]['prefix'] );
-		static::assertSame( 'unit_test_event', VIP_Telemetry::$events[0]['event'] );
-		static::assertSame( [ 'foo' => 'bar' ], VIP_Telemetry::$events[0]['properties'] );
+		static::assertSame(
+			[
+				[
+					'prefix'     => Telemetry::EVENT_PREFIX,
+					'event'      => 'unit_test_event',
+					'properties' => [ 'foo' => 'bar' ],
+				],
+			],
+			VIP_Telemetry::$events
+		);
 	}
 
 	public function test_singleton(): void {

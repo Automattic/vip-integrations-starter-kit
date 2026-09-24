@@ -37,7 +37,7 @@ class AdminTest extends WP_UnitTestCase {
 		$admin = Admin::get_instance();
 		$admin->admin_init();
 
-		$filter = 'plugin_action_links_' . static::PLUGIN_FILE;
+		$filter = 'plugin_action_links_' . self::PLUGIN_FILE;
 		static::assertEquals( 10, has_filter( $filter, [ $admin, 'plugin_action_links' ] ) );
 	}
 
@@ -45,7 +45,7 @@ class AdminTest extends WP_UnitTestCase {
 	 * @global bool[] $_registered_pages
 	 */
 	public function test_admin_menu(): void {
-		/** @psalm-var array<string, bool> $_registered_pages */
+		/** @var array<string, bool> $_registered_pages */
 		global $_registered_pages;
 
 		Admin::get_instance()->init();
@@ -58,7 +58,7 @@ class AdminTest extends WP_UnitTestCase {
 	}
 
 	public function test_plugin_action_links(): void {
-		$filter = 'plugin_action_links_' . static::PLUGIN_FILE;
+		$filter = 'plugin_action_links_' . self::PLUGIN_FILE;
 
 		$plugin = Admin::get_instance();
 		$plugin->admin_init();
@@ -68,6 +68,7 @@ class AdminTest extends WP_UnitTestCase {
 
 		static::assertIsArray( $links );
 		static::assertArrayHasKey( 'settings', $links );
+		static::assertIsString( $links['settings'] );
 		static::assertStringContainsString( 'options-general.php?page=' . Admin::OPTIONS_MENU_SLUG, $links['settings'] );
 	}
 }

@@ -8,6 +8,7 @@
 | `fixtures/`                | Mock runtime configs for local development and tests (see `fixtures/README.md`).              |
 | `tests/phpunit/`           | PHPUnit tests (run through `composer test:unit`).                                             |
 | `tests/e2e/`               | Playwright end-to-end tests (run through `composer test:e2e`; needs a running `vip dev-env`). |
+| `tests/phpstan/`           | Stub overrides for PHPStan (run through `composer phpstan`).                                  |
 | `vip-manifest.yaml`        | The handoff manifest VIP registers and loads the integration from (see `docs/manifest.md`).   |
 | `vip-manifest.schema.json` | JSON Schema the manifest is validated against.                                                |
 | `bin/`                     | Repo tooling: the `setup.php` scaffold.                                                       |

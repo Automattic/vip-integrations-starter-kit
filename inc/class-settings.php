@@ -6,7 +6,7 @@ use ArrayAccess;
 use LogicException;
 
 /**
- * @psalm-type SettingsArray = array{
+ * @phpstan-type SettingsArray array{
  *  enabled: bool,
  *  message: string,
  * }
@@ -21,7 +21,7 @@ final class Settings implements ArrayAccess {
 	private static $instance;
 
 	public static function get_instance(): self {
-		if ( ! self::$instance ) {
+		if ( null === self::$instance ) {
 			// @codeCoverageIgnoreStart
 			// Depending on the test order, the instance may have already been set
 			self::$instance = new self();
@@ -31,19 +31,13 @@ final class Settings implements ArrayAccess {
 		return self::$instance;
 	}
 
-	/**
-	 * @psalm-readonly
-	 * @psalm-var SettingsArray
-	 */
-	private static $defaults = [
+	/** @var SettingsArray */
+	private const DEFAULTS = [
 		'enabled' => false,
 		'message' => 'Hello',
 	];
 
-	/**
-	 * @var array
-	 * @psalm-var SettingsArray
-	 */
+	/** @var SettingsArray */
 	private $options;
 
 	/**
@@ -60,32 +54,32 @@ final class Settings implements ArrayAccess {
 	}
 
 	/**
-	 * @psalm-return SettingsArray
+	 * @return SettingsArray
 	 */
 	public static function defaults(): array {
-		return self::$defaults;
+		return self::DEFAULTS;
 	}
 
 	/**
-	 * @param mixed $offset
+	 * @param string $offset
 	 */
 	public function offsetExists( $offset ): bool {
-		return isset( $this->options[ (string) $offset ] );
+		return isset( $this->options[ $offset ] );
 	}
 
 	/**
-	 * @param mixed $offset
-	 * @return int|string|bool|null
+	 * @param string $offset
+	 * @return string|bool|null
 	 */
 	#[\ReturnTypeWillChange]
 	public function offsetGet( $offset ) {
-		return $this->options[ (string) $offset ] ?? null;
+		return $this->options[ $offset ] ?? null;
 	}
 
 	/**
 	 * @param mixed $_offset
 	 * @param mixed $_value
-	 * @psalm-return never
+	 * @return never
 	 * @throws LogicException
 	 */
 	public function offsetSet( $_offset, $_value ): void {
@@ -94,7 +88,7 @@ final class Settings implements ArrayAccess {
 
 	/**
 	 * @param mixed $_offset
-	 * @psalm-return never
+	 * @return never
 	 * @throws LogicException
 	 */
 	public function offsetUnset( $_offset ): void {

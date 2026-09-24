@@ -1,0 +1,26 @@
+includes:
+	- phar://phpstan.phar/conf/bleedingEdge.neon
+
+parameters:
+	level: 10
+	treatPhpDocTypesAsCertain: false
+	phpVersion: 80200
+	paths:
+		- example-integration.php
+		- inc
+		- views
+		- tests/phpunit
+	scanFiles:
+		- vendor/wildwolf/wordpress-test-library-stubs/wordpress-test-library-stubs.php
+	stubFiles:
+		- tests/phpstan/wordpress.stubs
+	ignoreErrors:
+		-
+			# The test double's signature mirrors the real VIP Telemetry API.
+			identifier: constructor.unusedParameter
+			path: tests/phpunit/stubs/class-vip-telemetry.php
+		-
+			# WP_UnitTestCase calls wpSetUpBeforeClass() by name.
+			identifier: shipmonk.deadMethod
+			message: '#::wpSetUpBeforeClass$#'
+			reportUnmatched: false
