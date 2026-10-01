@@ -22,6 +22,13 @@ test.describe('Admin Dashboard', () => {
             await expect(adminPage.adminMenu).not.toBeVisible();
         }
     });
+});
+
+test.describe('Admin Dashboard', () => {
+    // Start logged out. When already logged in, wp-login.php clears the password
+    // field 200ms after load, which can wipe it after we fill it; the form then
+    // never submits and logOut() destroys the shared session instead.
+    test.use({ storageState: { cookies: [], origins: [] } });
 
     test('Log Out', async ({ page }) => {
         const loginPage = new LoginPage(page);
