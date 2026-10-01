@@ -41,8 +41,8 @@ class AdminSettingsTest extends WP_UnitTestCase {
 		global $wp_settings_sections;
 		global $wp_settings_fields;
 
-		/** @psalm-var array<string, array<string, mixed>> $wp_settings_sections */
-		/** @psalm-var array<string, array<string, mixed>> $wp_settings_fields */
+		/** @var array<string, array<string, mixed>> $wp_settings_sections */
+		/** @var array<string, array<string, array<string, mixed>>> $wp_settings_fields */
 
 		$admin_settings = new AdminSettings( new InputFactory( Settings::OPTIONS_KEY, Settings::get_instance() ) );
 		$admin_settings->register_settings();
@@ -65,7 +65,7 @@ class AdminSettingsTest extends WP_UnitTestCase {
 	public function test_register(): void {
 		global $wp_settings_fields;
 
-		/** @psalm-var array<string, array<string, mixed>> $wp_settings_fields */
+		/** @var array<string, array<string, mixed>> $wp_settings_fields */
 
 		AdminSettings::register();
 
@@ -81,7 +81,7 @@ class AdminSettingsTest extends WP_UnitTestCase {
 		wp_set_current_user( 0 );
 
 		ob_start();
-		AdminSettings::get_instance()->settings_page();
+		AdminSettings::settings_page();
 		$contents = ob_get_clean();
 
 		self::assertEmpty( $contents );
@@ -94,7 +94,7 @@ class AdminSettingsTest extends WP_UnitTestCase {
 		$plugin_page = Admin::OPTIONS_MENU_SLUG;
 
 		ob_start();
-		AdminSettings::get_instance()->settings_page();
+		AdminSettings::settings_page();
 		$contents = ob_get_clean();
 
 		self::assertNotEmpty( $contents );

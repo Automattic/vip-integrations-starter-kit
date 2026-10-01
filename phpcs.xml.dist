@@ -52,6 +52,20 @@
 		<exclude name="Universal.Arrays.DisallowShortArraySyntax.Found"/>
 	</rule>
 
+	<!-- WordPress-VIP-Go silences unused variables. Static analysis (PHPStan)
+		does not report them either, so turn them back on here, as errors.
+		Unused parameters stay with Generic.CodeAnalysis.UnusedFunctionParameter,
+		which already allows for hook callbacks. -->
+	<rule ref="VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable">
+		<type>error</type>
+		<severity>5</severity>
+	</rule>
+	<rule ref="VariableAnalysis.CodeAnalysis.VariableAnalysis">
+		<properties>
+			<property name="allowUnusedFunctionParameters" value="true"/>
+		</properties>
+	</rule>
+
 	<rule ref="WordPress.Files.FileName">
 		<exclude-pattern>/tests/*</exclude-pattern>
 	</rule>

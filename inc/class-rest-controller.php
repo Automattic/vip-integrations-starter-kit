@@ -13,7 +13,7 @@ final class REST_Controller {
 	private static $instance;
 
 	public static function get_instance(): self {
-		if ( ! self::$instance ) {
+		if ( null === self::$instance ) {
 			self::$instance = new self();
 		}
 
@@ -35,22 +35,24 @@ final class REST_Controller {
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => [ $this, 'sum' ],
 				'permission_callback' => fn(): bool => current_user_can( 'read' ),
+				// Core sanitizes each argument to its schema type.
 				'args'                => [
 					'a' => [
-						'required'          => true,
-						'type'              => 'integer',
-						'sanitize_callback' => /** @param mixed $x */ fn ( $x ): int => intval( $x ),
+						'required' => true,
+						'type'     => 'integer',
 					],
 					'b' => [
-						'required'          => true,
-						'type'              => 'integer',
-						'sanitize_callback' => /** @param mixed $x */ fn ( $x ): int => intval( $x ),
+						'required' => true,
+						'type'     => 'integer',
 					],
 				],
 			]
 		);
 	}
 
+	/**
+	 * @param WP_REST_Request<array{a: int, b: int}> $request
+	 */
 	public function sum( WP_REST_Request $request ): WP_REST_Response {
 		$a = (int) $request->get_param( 'a' );
 		$b = (int) $request->get_param( 'b' );

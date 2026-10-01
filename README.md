@@ -22,9 +22,7 @@ For end-to-end tests we use [Playwright](https://playwright.dev/). Examples can 
 
 ### Static analysis
 
-[Psalm](https://psalm.dev/) is a free & open-source static analysis tool that helps you identify problems in your code.
-
-Please note, for Psalm to work properly you will need to annotate your PHP code. For examples please refer to [/inc](/inc).
+[PHPStan](https://phpstan.org/) runs at level 10 with the [WordPress](https://github.com/szepeviktor/phpstan-wordpress), strict-rules, PHPUnit and [dead-code](https://github.com/shipmonk-rnd/dead-code-detector) extensions. Run it with `composer phpstan`. For it to work properly you will need to annotate your PHP code; see [/inc](/inc) for examples. Overrides for stub signatures that are missing or wrong live in [/tests/phpstan](/tests/phpstan).
 
 ### Linting and coding standards.
 
@@ -41,7 +39,7 @@ CI runs on every push and pull request to `main`:
 | `unit-tests.yml`                       | PHPUnit across the VIP platform baseline (PHP 8.2–8.5 × WordPress 6.9.x/latest, single site and multisite). |
 | `e2e.yml`                              | Playwright end-to-end tests against a real `vip dev-env` (WordPress 6.9 and 7.0).                           |
 | `lint.yml`                             | PHPCS with the WordPress VIP rulesets.                                                                      |
-| `static-code-analysis.yml`             | Psalm static analysis.                                                                                      |
+| `static-code-analysis.yml`             | PHPStan static analysis.                                                                                    |
 | `codeql.yml` / `dependency-review.yml` | Security scanning of code and dependency changes.                                                           |
 
 ## Repository structure

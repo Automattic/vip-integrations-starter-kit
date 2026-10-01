@@ -5,10 +5,8 @@ namespace ExampleVendor\ExampleIntegration;
 use ArrayAccess;
 
 /**
- * @psalm-type HtmlAttrs = array<string,mixed>
- * @psalm-type HelpArgs = array{help?: string}
- * @psalm-type InputArgs = array{label_for: string, type?: string}&HelpArgs&HtmlAttrs
- * @psalm-type CheckBoxArgs = array{label_for: string}&HelpArgs&HtmlAttrs
+ * @phpstan-type InputArgs array{label_for: string, type?: string, help?: string, ...<string, mixed>}
+ * @phpstan-type CheckBoxArgs array{label_for: string, help?: string, ...<string, mixed>}
  */
 final class InputFactory {
 	/** @var string */
@@ -25,7 +23,7 @@ final class InputFactory {
 	}
 
 	/**
-	 * @psalm-param InputArgs $args
+	 * @param InputArgs $args
 	 */
 	public function input( array $args ): void {
 		$name  = $this->option_name;
@@ -43,12 +41,11 @@ final class InputFactory {
 			self::get_attributes( $args ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		);
 
-		/** @psalm-var HelpArgs $args */
 		self::render_help( $args );
 	}
 
 	/**
-	 * @psalm-param CheckBoxArgs $args
+	 * @param CheckBoxArgs $args
 	 */
 	public function checkbox( array $args ): void {
 		$name  = $this->option_name;
@@ -94,15 +91,14 @@ final class InputFactory {
 			}
 		}
 
-		return $attrs ? ' ' . join( ' ', $attrs ) : '';
+		return [] !== $attrs ? ' ' . join( ' ', $attrs ) : '';
 	}
 
 	/**
-	 * @psalm-param HelpArgs&mixed[] $args
+	 * @param array{help?: string, ...<string, mixed>} $args
 	 */
 	private static function render_help( array $args ): void {
-		/** @psalm-suppress RiskyTruthyFalsyComparison */
-		if ( ! empty( $args['help'] ) ) {
+		if ( isset( $args['help'] ) && '' !== $args['help'] ) {
 			printf(
 				'<p class="help">%s</p>',
 				wp_kses(

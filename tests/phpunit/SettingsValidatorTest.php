@@ -9,14 +9,14 @@ use WP_UnitTestCase;
  * @covers ExampleVendor\ExampleIntegration\SettingsValidator
  * @uses \ExampleVendor\ExampleIntegration\Settings
  * @uses \ExampleVendor\ExampleIntegration\InputFactory::__construct
- * @psalm-import-type SettingsArray from Settings
+ * @phpstan-import-type SettingsArray from Settings
  */
 class SettingsValidatorTest extends WP_UnitTestCase {
 	/**
 	 * @dataProvider data_sanitize
 	 * @uses \ExampleVendor\ExampleIntegration\AdminSettings
 	 * @param mixed $value
-	 * @psalm-param SettingsArray $expected
+	 * @param SettingsArray $expected
 	 */
 	public function test_sanitize( $value, array $expected ): void {
 		AdminSettings::get_instance()->register_settings();
@@ -28,7 +28,7 @@ class SettingsValidatorTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * @psalm-return iterable<array-key, array{mixed, SettingsArray}>
+	 * @return iterable<array-key, array{mixed, SettingsArray}>
 	 */
 	public function data_sanitize(): iterable {
 		return [
@@ -59,7 +59,7 @@ class SettingsValidatorTest extends WP_UnitTestCase {
 	/**
 	 * @dataProvider data_ensure_data_shape
 	 * @param mixed[] $value
-	 * @psalm-param SettingsArray $expected
+	 * @param SettingsArray $expected
 	 */
 	public function test_ensure_data_shape( array $value, array $expected ): void {
 		$actual = SettingsValidator::ensure_data_shape( $value );
@@ -67,7 +67,7 @@ class SettingsValidatorTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * @psalm-return iterable<array-key, array{mixed[], SettingsArray}>
+	 * @return iterable<array-key, array{mixed[], SettingsArray}>
 	 */
 	public function data_ensure_data_shape(): iterable {
 		return [

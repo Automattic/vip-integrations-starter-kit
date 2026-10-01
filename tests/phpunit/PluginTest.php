@@ -33,7 +33,7 @@ class PluginTest extends WP_UnitTestCase {
 
 		ob_start();
 		$plugin->wp_footer();
-		$actual = ob_get_clean();
+		$actual = (string) ob_get_clean();
 
 		static::assertStringContainsString( '<p class="example-integration-signature">Example Integration (dev)</p>', $actual );
 	}

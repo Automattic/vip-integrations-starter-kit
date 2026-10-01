@@ -9,7 +9,7 @@ final class Admin {
 	private static $instance;
 
 	public static function get_instance(): self {
-		if ( ! self::$instance ) {
+		if ( null === self::$instance ) {
 			self::$instance = new self();
 		}
 

@@ -1,0 +1,45 @@
+<?php
+/**
+ * Overrides for WordPress stub signatures that are wrong, or too loose for
+ * the tests. Keep each one to a symbol that genuinely needs it.
+ */
+
+/**
+ * Core passes every key in $args on to the field callback, so the shape is
+ * open, not limited to the two keys core reads itself. Fixed upstream in
+ * php-stubs/wordpress-stubs#485; remove once a release includes it.
+ *
+ * @param string                                                         $id
+ * @param string                                                         $title
+ * @param callable                                                       $callback
+ * @param string                                                         $page
+ * @param string                                                         $section
+ * @param array{label_for?: string, class?: string, ...<string, mixed>} $args
+ * @return void
+ */
+function add_settings_field( $id, $title, $callback, $page, $section = 'default', $args = array() ) {}
+
+/**
+ * The test factories return WP_Error only when fixture creation fails, which
+ * aborts the test anyway, so narrow create() to the ID every test relies on.
+ * Each factory redeclares create() through its own @method tag, so the
+ * override has to sit on the subclasses the tests use as well.
+ */
+abstract class WP_UnitTest_Factory_For_Thing {
+	/**
+	 * @param array<string, mixed>      $args
+	 * @param array<string, mixed>|null $generation_definitions
+	 * @return int
+	 */
+	public function create( $args = array(), $generation_definitions = null ) {}
+}
+
+/**
+ * @method int create( array<string, mixed> $args = array(), array<string, mixed>|null $generation_definitions = null )
+ */
+class WP_UnitTest_Factory_For_Post extends WP_UnitTest_Factory_For_Thing {}
+
+/**
+ * @method int create( array<string, mixed> $args = array(), array<string, mixed>|null $generation_definitions = null )
+ */
+class WP_UnitTest_Factory_For_User extends WP_UnitTest_Factory_For_Thing {}

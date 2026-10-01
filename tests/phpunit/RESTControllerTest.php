@@ -39,11 +39,14 @@ class RESTControllerTest extends WP_Test_REST_TestCase {
 		parent::tearDown();
 	}
 
+	/**
+	 * @param array<string, mixed>|null $post
+	 */
 	protected function dispatch_request( string $method, string $route, ?array $post = null ): WP_REST_Response {
 		$route = '/' . ltrim( $route, '/' );
 
 		$request = new WP_REST_Request( $method, $route );
-		if ( $post ) {
+		if ( null !== $post ) {
 			$request->set_body_params( $post );
 		}
 
@@ -60,12 +63,12 @@ class RESTControllerTest extends WP_Test_REST_TestCase {
 
 	public function test_sum(): void {
 		$response = $this->dispatch_request( 'GET', REST_Controller::NAMESPACE . '/sum/2/3' );
-		static::assertEquals( 200, $response->get_status() );
-		static::assertEquals( 5, $response->get_data() );
+		static::assertSame( 200, $response->get_status() );
+		static::assertSame( 5, $response->get_data() );
 	}
 
 	public function test_not_found(): void {
 		$response = $this->dispatch_request( 'GET', REST_Controller::NAMESPACE . '/sum/a/b' );
-		static::assertEquals( 404, $response->get_status() );
+		static::assertSame( 404, $response->get_status() );
 	}
 }

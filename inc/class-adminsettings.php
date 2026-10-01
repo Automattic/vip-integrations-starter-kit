@@ -12,7 +12,7 @@ final class AdminSettings {
 	private $input_factory;
 
 	public static function get_instance(): self {
-		if ( ! self::$instance ) {
+		if ( null === self::$instance ) {
 			self::$instance = new self( new InputFactory( Settings::OPTIONS_KEY, Settings::get_instance() ) );
 		}
 

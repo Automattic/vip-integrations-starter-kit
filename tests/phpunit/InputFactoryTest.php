@@ -5,8 +5,6 @@ namespace ExampleVendor\ExampleIntegration;
 use WP_UnitTestCase;
 
 /**
- * @psalm-suppress MissingConstructor
- * @psalm-import-type InputArgs from InputFactory
  * @covers \ExampleVendor\ExampleIntegration\InputFactory
  */
 class InputFactoryTest extends WP_UnitTestCase {
@@ -14,15 +12,16 @@ class InputFactoryTest extends WP_UnitTestCase {
 	private $input_factory;
 
 	public function setUp(): void {
+		parent::setUp();
 		$this->input_factory = new InputFactory( 'option', [ 'somekey' => 'somevalue' ] );
 	}
 
 	public function test_input(): void {
-		$output = $this->render( 'input', [
+		$output = $this->render( fn () => $this->input_factory->input( [
 			'label_for'    => 'somekey',
 			'autocomplete' => 'off',
 			'help'         => 'Help Text',
-		], $this->input_factory );
+		] ) );
 
 		self::assertStringContainsString( '<p class="help">Help Text</p>', $output );
 		self::assertStringContainsString( 'autocomplete="off"', $output );
@@ -35,7 +34,7 @@ class InputFactoryTest extends WP_UnitTestCase {
 	 */
 	public function test_checkbox( bool $checked ): void {
 		$this->input_factory = new InputFactory( 'option', [ 'somekey' => $checked ] );
-		$output              = $this->render( 'checkbox', [ 'label_for' => 'somekey' ], $this->input_factory );
+		$output              = $this->render( fn () => $this->input_factory->checkbox( [ 'label_for' => 'somekey' ] ) );
 
 		self::assertStringNotContainsString( '<p class="help">', $output );
 		self::assertStringContainsString( '<input type="hidden" name="option[somekey]" value="0"/>', $output );
@@ -50,7 +49,7 @@ class InputFactoryTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * @psalm-return iterable<array-key,array{bool}>
+	 * @return iterable<array-key,array{bool}>
 	 */
 	public function data_checkbox(): iterable {
 		return [
@@ -60,35 +59,35 @@ class InputFactoryTest extends WP_UnitTestCase {
 	}
 
 	public function test_get_attributes_non_scalar(): void {
-		$output = $this->render( 'input', [
+		$output = $this->render( fn () => $this->input_factory->input( [
 			'label_for'    => 'somekey',
 			'autocomplete' => [ 1, 2, 3 ],
-		], $this->input_factory );
+		] ) );
 
 		self::assertStringNotContainsString( 'autocomplete', $output );
 	}
 
 	public function test_get_attributes_false(): void {
-		$output = $this->render( 'input', [
+		$output = $this->render( fn () => $this->input_factory->input( [
 			'label_for' => 'somekey',
 			'required'  => false,
-		], $this->input_factory );
+		] ) );
 
 		self::assertStringNotContainsString( 'required', $output );
 	}
 
 	public function test_get_attributes_true(): void {
-		$output = $this->render( 'input', [
+		$output = $this->render( fn () => $this->input_factory->input( [
 			'label_for' => 'somekey',
 			'required'  => true,
-		], $this->input_factory );
+		] ) );
 
 		self::assertStringContainsString( 'required="required', $output );
 	}
 
-	private function render( string $method, array $args, InputFactory $factory ): string {
+	private function render( callable $render_field ): string {
 		ob_start();
-		$factory->$method( $args );
+		$render_field();
 		$result = ob_get_clean();
 
 		self::assertIsString( $result );
