@@ -32,6 +32,15 @@ submitting.
 | `docs/`                                           | Human docs. Start with `docs/vip-integration.md`.                                                          |
 | `.wpvip/`, `.devcontainer/`, `.github/workflows/` | VIP dev-env, Codespaces, and CI.                                                                           |
 
+### Working in an existing plugin instead
+
+If the task is *adding VIP integration support to a plugin that already exists*
+rather than building from this kit, read `docs/existing-plugin.md`. It lists the
+additive pieces only — manifest, config reader, degradation, telemetry, entry
+constants, CI matrix, docs — and names what in this repo is demonstration
+material to ignore. Do not port the kit's directory layout into someone else's
+plugin.
+
 ## Non-negotiables
 
 - **Do not delete the app folders.** Every top-level directory is part of a
