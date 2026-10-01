@@ -8,6 +8,8 @@ Utilizing these tools will allow you to submit the new versions of your integrat
 
 The kit implements the WordPress VIP integration requirements and doubles as a reference implementation: runtime config via a single VIP-provided constant, config fixtures, Tracks telemetry, `composer test`, and the [handoff manifest](/docs/manifest.md) VIP registers the integration from. See [/docs/vip-integration.md](/docs/vip-integration.md) for the operational details. Check conformance with the [`vip-integration`](https://github.com/Automattic/integration) CLI (`npx @automattic/vip-integration validate`).
 
+📝 **Already have a plugin?** Don't start again. [/docs/existing-plugin.md](/docs/existing-plugin.md) lists only the pieces an established plugin needs to add, and what it can safely ignore.
+
 ## Technology
 
 We used tools that we consider the best technology in the industry with convenience in mind. These are the tools we use on a day-to-day basis to ensure code quality on WordPress VIP platform.

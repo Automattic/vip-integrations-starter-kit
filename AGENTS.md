@@ -32,6 +32,15 @@ submitting.
 | `docs/`                                           | Human docs. Start with `docs/vip-integration.md`.                                                          |
 | `.wpvip/`, `.devcontainer/`, `.github/workflows/` | VIP dev-env, Codespaces, and CI.                                                                           |
 
+### Working in an existing plugin instead
+
+If the task is *adding VIP integration support to a plugin that already exists*
+rather than building from this kit, read `docs/existing-plugin.md`. It lists the
+additive pieces only — manifest, config reader, degradation, telemetry, entry
+constants, CI matrix, docs — and names what in this repo is demonstration
+material to ignore. Do not port the kit's directory layout into someone else's
+plugin.
+
 ## Non-negotiables
 
 - **Do not delete the app folders.** Every top-level directory is part of a
@@ -87,8 +96,11 @@ and invalid states — wire new cases in there.
 
 Record events through `inc/class-telemetry.php` only. It wraps the VIP Tracks
 API behind a `class_exists` guard so non-VIP environments no-op. Event names are
-prefixed with the integration's snake_case name. Properties carry usage metadata
-only — never secrets, request payloads, emails, or credentials. Declare every
+prefixed with the integration's name squashed to a **single word** plus a
+trailing underscore (`exampleintegration_`, never `example_integration_`) — the
+Tracks prefix is one token, unlike the snake_case used for option keys.
+Properties carry usage metadata only — never secrets, request payloads, emails,
+or credentials. Declare every
 event in the `telemetry` section of `vip-manifest.yaml`.
 
 ### Tests

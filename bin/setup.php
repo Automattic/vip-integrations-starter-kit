@@ -39,6 +39,10 @@ $vendor_kebab  = kebab_case( $vendor );
 $name_kebab    = kebab_case( $name );
 $name_snake    = str_replace( '-', '_', $name_kebab );
 $name_upper    = strtoupper( $name_snake );
+// Tracks prefixes are a single token, so the telemetry prefix squashes the name
+// instead of joining its words with underscores: "Content Sync" becomes
+// `contentsync_`, not `content_sync_`. See docs/vip-integration.md#telemetry.
+$name_squashed = str_replace( '-', '', $name_kebab );
 $name_words    = ucwords( str_replace( '-', ' ', $name_kebab ) );
 $vendor_words  = ucwords( str_replace( '-', ' ', $vendor_kebab ) );
 
@@ -48,6 +52,7 @@ $replacements = [
 	'ExampleVendor'                      => $vendor_pascal,
 	'ExampleIntegration'                 => $name_pascal,
 	'VIP_EXAMPLE_INTEGRATION'            => "VIP_{$name_upper}",
+	'exampleintegration'                 => $name_squashed,
 	'example_integration'                => $name_snake,
 	'example-integration'                => $name_kebab,
 	'Example Integration'                => $name_words,

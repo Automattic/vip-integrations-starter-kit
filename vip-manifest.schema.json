@@ -143,8 +143,8 @@
       "properties": {
         "prefix": {
           "type": "string",
-          "pattern": "^[a-z0-9_]+_$",
-          "description": "Event name prefix, ending in an underscore, e.g. acme_widget_."
+          "pattern": "^[a-z][a-z0-9]*_$",
+          "description": "Event name prefix: a single word plus a trailing underscore, e.g. acmewidget_. Tracks prefixes are one token identifying the product, so squash a multi-word name rather than joining its words with underscores (acmewidget_, not acme_widget_)."
         },
         "default_properties": {
           "type": "array",
