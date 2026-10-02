@@ -324,16 +324,41 @@ the full matrix, that is a conversation and an exception flag, not a header edit
 
 ### 7. `composer test` wiring
 
-Rule 2 requires the `test` script to invoke PHPUnit **and** an e2e runner
-(Playwright, Cypress, Codeception or Puppeteer). If your plugin has unit and
-integration PHPUnit suites but no browser tests, this is the one rule that
-asks for genuinely new test work.
+Rule 2 requires the `test` script to invoke PHPUnit **and** an e2e runner:
+Playwright, Cypress, Codeception, Puppeteer or Behat.
+
+Behat counts because, run through WP-CLI against a real WordPress install, it
+exercises the whole stack — plugin loaded, commands registered, database
+touched, output asserted. For an integration whose surfaces are WP-CLI commands
+or request handling rather than admin screens, that *is* the end-to-end surface,
+and a browser driver would verify nothing the Behat suite does not already
+cover. An integration that does ship admin screens should still expect a
+reviewer to ask why they are untested; the rule checks that an e2e suite is
+wired up, not that it covers the right surfaces.
+
+So if your plugin already has a Behat suite, this rule costs you a line in
+`composer.json` rather than a new test suite. If it has neither Behat nor
+browser tests, this is the one rule that asks for genuinely new test work.
+
+> **Needs a checker newer than 0.1.2.** Behat was added after that release. Until
+> a version carrying it is published, `npx @automattic/vip-integration validate`
+> will still report `no playwright/cypress/codeception/puppeteer invocation` for
+> a Behat-only suite.
 
 ```json
 "scripts": {
   "test": [ "@test:unit", "@test:e2e" ],
   "test:unit": "phpunit",
   "test:e2e": "npm test"
+}
+```
+
+A plugin with an existing Behat suite usually only has to add it to `test`:
+
+```json
+"scripts": {
+  "test": [ "@test:unit", "@test:integration", "@test:behat" ],
+  "test:behat": "behat --colors"
 }
 ```
 
@@ -424,7 +449,8 @@ its developer instructions there.
 
 - a build or install command — `composer install`, `npm ci`, `npm install` or
   `npm run build`
-- a test command — `composer test`, `phpunit`, or a named e2e runner
+- a test command — `composer test`, `phpunit`, or a named e2e runner (the same
+  list as rule 2, so documenting `behat` counts)
 
 **Rule 6** needs two fenced code blocks that mention the config constant by
 name, one of which is explicitly labelled as the incomplete case. The labelling
@@ -468,7 +494,7 @@ nothing at review:
 | `bin/setup.php`, `composer setup`               | Renames the kit's example tokens. You have no example tokens.    |
 | `.devcontainer/`                                | Codespaces convenience.                                         |
 | `.wpvip/plugin-loader.php`                      | Useful only if you develop against `vip dev-env`.               |
-| `psalm.xml.dist`, `phpcs.xml.dist`              | Keep your existing static analysis and coding standards config. |
+| `phpstan.neon.dist`, `phpcs.xml.dist`           | Keep your existing static analysis and coding standards config. |
 | `tests/e2e/lib/*.pom.ts`                        | Page objects for the kit's example screens.                     |
 | `docs/directories.md`                           | Describes the kit's layout, not yours.                          |
 
@@ -488,7 +514,8 @@ this repo. It does not apply to your plugin.
 5. Widen the CI matrix (rule 7).
 6. Add the entry file constants and, if you record anything, the telemetry
    wrapper (rule 9).
-7. Add an e2e suite and wire `composer test` (rule 2). Left until last because
-   it is the largest piece of new work.
+7. Wire `composer test` to an e2e suite (rule 2). If you already have Behat,
+   that is a one-line change and can move up the list; if you have no e2e suite
+   at all, it is the largest piece of new work, hence last.
 
 Re-run `npx @automattic/vip-integration validate` after each step.
