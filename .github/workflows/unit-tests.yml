@@ -24,7 +24,7 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          # VIP platform baseline: WordPress 7.0 (latest) and 6.9.x on PHP 8.2-8.5.
+          # VIP platform baseline: WordPress latest and 6.9.x on PHP 8.2-8.5.
           - { wp: 6.9.x,   ms: 'yes', php: '8.2' }
           - { wp: 6.9.x,   ms: 'no',  php: '8.2' }
           - { wp: latest,  ms: 'no',  php: '8.2', coverage: 'yes' }
