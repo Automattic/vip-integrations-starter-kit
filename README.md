@@ -39,7 +39,7 @@ CI runs on every push and pull request to `main`:
 | Workflow                               | What it does                                                                                                |
 | -------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
 | `unit-tests.yml`                       | PHPUnit across the VIP platform baseline (PHP 8.2–8.5 × WordPress 6.9.x/latest, single site and multisite). |
-| `e2e.yml`                              | Playwright end-to-end tests against a real `vip dev-env` (WordPress 6.9 and 7.0).                           |
+| `e2e.yml`                              | Playwright end-to-end tests against a real `vip dev-env` (WordPress 6.9 and latest).                        |
 | `lint.yml`                             | PHPCS with the WordPress VIP rulesets.                                                                      |
 | `static-code-analysis.yml`             | PHPStan static analysis.                                                                                    |
 | `codeql.yml` / `dependency-review.yml` | Security scanning of code and dependency changes.                                                           |

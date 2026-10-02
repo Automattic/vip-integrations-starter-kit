@@ -64,7 +64,7 @@ pattern rather than introducing a new one.
 
 ### PHP
 
-- **Baseline:** PHP 8.2+, WordPress 6.9 / 7.0. Do not use syntax newer than 8.2.
+- **Baseline:** PHP 8.2+, WordPress 6.9+ (CI covers 6.9 and latest). Do not use syntax newer than 8.2.
 - **Namespaces:** everything under the integration root namespace (example:
   `ExampleVendor\ExampleIntegration`). One class per file, filenames
   `class-<name>.php`, autoloaded via the Composer classmap on `inc/`.
