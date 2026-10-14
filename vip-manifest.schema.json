@@ -225,7 +225,7 @@
           "description": "Optional default value pre-filled in the form. Must follow the field's own rules; a list for \"list\" fields."
         },
         "example": {
-          "type": [ "string", "number", "array" ],
+          "type": [ "string", "number", "boolean", "array" ],
           "items": { "type": "string" },
           "description": "Optional example value, shown as the input placeholder. Must follow the field's own rules; a list for \"list\" fields."
         },
@@ -318,11 +318,6 @@
           "then": { "required": [ "example" ] }
         },
         {
-          "$comment": "A required field can't be nullable, since it can't be cleared.",
-          "if": { "required": [ "required" ], "properties": { "required": { "const": true } } },
-          "then": { "properties": { "nullable": { "const": false } } }
-        },
-        {
           "$comment": "\"integer\" only applies to type \"number\".",
           "if": { "required": [ "integer" ] },
           "then": { "properties": { "type": { "enum": [ "number" ] } } }
@@ -364,9 +359,11 @@
           }
         },
         {
-          "$comment": "\"format\" only applies to type \"string\".",
+          "$comment": "\"format\" only applies to type \"string\", \"text\", \"url\", \"email\", \"secret\".",
           "if": { "required": [ "format" ] },
-          "then": { "properties": { "type": { "enum": [ "string" ] } } }
+          "then": {
+            "properties": { "type": { "enum": [ "string", "text", "url", "email", "secret" ] } }
+          }
         },
         {
           "$comment": "\"items\" only applies to type \"list\".",
@@ -379,11 +376,23 @@
           "then": { "properties": { "type": { "enum": [ "list" ] } } }
         },
         {
-          "$comment": "\"example\" only applies to type \"string\", \"text\", \"url\", \"email\", \"number\", \"secret\", \"list\".",
+          "$comment": "\"example\" only applies to type \"string\", \"text\", \"url\", \"email\", \"number\", \"boolean\", \"secret\", \"enum\", \"list\".",
           "if": { "required": [ "example" ] },
           "then": {
             "properties": {
-              "type": { "enum": [ "string", "text", "url", "email", "number", "secret", "list" ] }
+              "type": {
+                "enum": [
+                  "string",
+                  "text",
+                  "url",
+                  "email",
+                  "number",
+                  "boolean",
+                  "secret",
+                  "enum",
+                  "list"
+                ]
+              }
             }
           }
         }
