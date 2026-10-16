@@ -26,13 +26,13 @@
     "integration": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["slug", "display_name", "summary", "partner"],
+      "required": [ "slug", "display_name", "summary", "partner" ],
       "properties": {
         "slug": {
           "type": "string",
           "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
           "minLength": 3,
-          "maxLength": 63,
+          "maxLength": 30,
           "description": "Stable kebab-case identifier, unique across the Integration Center."
         },
         "display_name": {
@@ -50,13 +50,9 @@
         "partner": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["name", "support_contact"],
+          "required": [ "name", "support_contact" ],
           "properties": {
-            "name": {
-              "type": "string",
-              "minLength": 1,
-              "description": "Partner / vendor name."
-            },
+            "name": { "type": "string", "minLength": 1, "description": "Partner / vendor name." },
             "support_contact": {
               "type": "string",
               "minLength": 1,
@@ -69,7 +65,7 @@
     "documentation": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["public_url"],
+      "required": [ "public_url" ],
       "description": "Where VIP and customers find documentation for the integration.",
       "properties": {
         "public_url": {
@@ -87,12 +83,12 @@
     "runtime": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["wordpress_plugin"],
+      "required": [ "wordpress_plugin" ],
       "properties": {
         "wordpress_plugin": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["folder", "entry_file", "php_namespace", "scope"],
+          "required": [ "folder", "entry_file", "php_namespace", "scope" ],
           "properties": {
             "folder": {
               "type": "string",
@@ -110,7 +106,7 @@
               "description": "Root PHP namespace the plugin autoloads under."
             },
             "scope": {
-              "enum": ["site", "network"],
+              "enum": [ "site", "network" ],
               "description": "Whether the plugin loads per-site or network-wide."
             }
           }
@@ -120,7 +116,7 @@
     "runtime_config": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["constant_name", "fields"],
+      "required": [ "constant_name", "fields" ],
       "properties": {
         "constant_name": {
           "type": "string",
@@ -138,7 +134,7 @@
     "telemetry": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["prefix", "default_properties", "events"],
+      "required": [ "prefix", "default_properties", "events" ],
       "description": "VIP Tracks events the integration records. Omit this section entirely if it records none.",
       "properties": {
         "prefix": {
@@ -163,7 +159,7 @@
     "release": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["plugin_version", "version_strategy", "migration_required", "changelog"],
+      "required": [ "plugin_version", "version_strategy", "migration_required", "changelog" ],
       "description": "Metadata about the submitted plugin version.",
       "properties": {
         "plugin_version": {
@@ -192,7 +188,7 @@
     "configField": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["key", "label", "type"],
+      "required": [ "key", "label", "type" ],
       "properties": {
         "key": {
           "type": "string",
@@ -205,26 +201,87 @@
           "description": "Field label shown in the Integration Center form."
         },
         "type": {
-          "enum": ["string", "text", "url", "email", "number", "boolean", "secret", "enum"],
+          "enum": [
+            "string",
+            "text",
+            "url",
+            "email",
+            "number",
+            "boolean",
+            "secret",
+            "enum",
+            "list"
+          ],
           "description": "Input type. Use \"secret\" for values VIP must encrypt at rest."
         },
         "required": {
           "type": "boolean",
           "description": "Whether the field must be filled before the integration can activate."
         },
-        "help": {
-          "type": "string",
-          "description": "Optional helper text shown under the field."
-        },
+        "help": { "type": "string", "description": "Optional helper text shown under the field." },
         "default": {
-          "type": ["string", "number", "boolean"],
-          "description": "Optional default value pre-filled in the form."
+          "type": [ "string", "number", "boolean", "array" ],
+          "items": { "type": "string" },
+          "description": "Optional default value pre-filled in the form. Must follow the field's own rules; a list for \"list\" fields."
+        },
+        "example": {
+          "type": [ "string", "number", "boolean", "array" ],
+          "items": { "type": "string" },
+          "description": "Optional example value, shown as the input placeholder. Must follow the field's own rules; a list for \"list\" fields."
+        },
+        "nullable": {
+          "type": "boolean",
+          "description": "Whether saving null clears the value, so the plugin falls back to its own default. Defaults to false."
         },
         "values": {
           "type": "array",
           "minItems": 1,
           "items": { "type": "string" },
           "description": "Allowed values. Required when \"type\" is \"enum\"."
+        },
+        "integer": {
+          "type": "boolean",
+          "description": "Number fields only: whether the value must be a whole number."
+        },
+        "min": {
+          "type": "number",
+          "description": "Number fields only: the smallest allowed value."
+        },
+        "max": {
+          "type": "number",
+          "description": "Number fields only: the largest allowed value."
+        },
+        "unit": {
+          "enum": [ "seconds", "minutes", "hours", "days" ],
+          "description": "Number fields only: the unit the value is in, e.g. seconds."
+        },
+        "min_length": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Minimum number of characters."
+        },
+        "max_length": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Maximum number of characters."
+        },
+        "pattern": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Regular expression (JavaScript syntax) the whole value must match. Needs an \"example\", so the form can show the expected format."
+        },
+        "format": {
+          "enum": [ "ip_or_cidr", "url", "email" ],
+          "description": "A common format the value must have, e.g. ip_or_cidr."
+        },
+        "items": {
+          "$ref": "#/$defs/listItem",
+          "description": "List fields only: what each entry must be. Required when \"type\" is \"list\"."
+        },
+        "max_items": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "List fields only: the most entries the list may have."
         },
         "autogen": {
           "type": "boolean",
@@ -238,15 +295,141 @@
       },
       "allOf": [
         {
-          "if": { "properties": { "type": { "const": "enum" } } },
-          "then": { "required": ["values"] }
+          "$comment": "An enum field needs \"values\".",
+          "if": { "required": [ "type" ], "properties": { "type": { "const": "enum" } } },
+          "then": { "required": [ "values" ] }
+        },
+        {
+          "$comment": "A list field needs \"items\".",
+          "if": { "required": [ "type" ], "properties": { "type": { "const": "list" } } },
+          "then": { "required": [ "items" ] }
+        },
+        {
+          "$comment": "A field with \"pattern\" needs an \"example\", so the form can show the expected format.",
+          "if": {
+            "anyOf": [
+              { "required": [ "pattern" ] },
+              {
+                "required": [ "items" ],
+                "properties": { "items": { "type": "object", "required": [ "pattern" ] } }
+              }
+            ]
+          },
+          "then": { "required": [ "example" ] }
+        },
+        {
+          "$comment": "\"integer\" only applies to type \"number\".",
+          "if": { "required": [ "integer" ] },
+          "then": { "properties": { "type": { "enum": [ "number" ] } } }
+        },
+        {
+          "$comment": "\"min\" only applies to type \"number\".",
+          "if": { "required": [ "min" ] },
+          "then": { "properties": { "type": { "enum": [ "number" ] } } }
+        },
+        {
+          "$comment": "\"max\" only applies to type \"number\".",
+          "if": { "required": [ "max" ] },
+          "then": { "properties": { "type": { "enum": [ "number" ] } } }
+        },
+        {
+          "$comment": "\"unit\" only applies to type \"number\".",
+          "if": { "required": [ "unit" ] },
+          "then": { "properties": { "type": { "enum": [ "number" ] } } }
+        },
+        {
+          "$comment": "\"min_length\" only applies to type \"string\", \"text\", \"url\", \"email\", \"secret\".",
+          "if": { "required": [ "min_length" ] },
+          "then": {
+            "properties": { "type": { "enum": [ "string", "text", "url", "email", "secret" ] } }
+          }
+        },
+        {
+          "$comment": "\"max_length\" only applies to type \"string\", \"text\", \"url\", \"email\", \"secret\".",
+          "if": { "required": [ "max_length" ] },
+          "then": {
+            "properties": { "type": { "enum": [ "string", "text", "url", "email", "secret" ] } }
+          }
+        },
+        {
+          "$comment": "\"pattern\" only applies to type \"string\", \"text\", \"url\", \"email\", \"secret\".",
+          "if": { "required": [ "pattern" ] },
+          "then": {
+            "properties": { "type": { "enum": [ "string", "text", "url", "email", "secret" ] } }
+          }
+        },
+        {
+          "$comment": "\"format\" only applies to type \"string\", \"text\", \"url\", \"email\", \"secret\".",
+          "if": { "required": [ "format" ] },
+          "then": {
+            "properties": { "type": { "enum": [ "string", "text", "url", "email", "secret" ] } }
+          }
+        },
+        {
+          "$comment": "\"items\" only applies to type \"list\".",
+          "if": { "required": [ "items" ] },
+          "then": { "properties": { "type": { "enum": [ "list" ] } } }
+        },
+        {
+          "$comment": "\"max_items\" only applies to type \"list\".",
+          "if": { "required": [ "max_items" ] },
+          "then": { "properties": { "type": { "enum": [ "list" ] } } }
+        },
+        {
+          "$comment": "\"example\" only applies to type \"string\", \"text\", \"url\", \"email\", \"number\", \"boolean\", \"secret\", \"enum\", \"list\".",
+          "if": { "required": [ "example" ] },
+          "then": {
+            "properties": {
+              "type": {
+                "enum": [
+                  "string",
+                  "text",
+                  "url",
+                  "email",
+                  "number",
+                  "boolean",
+                  "secret",
+                  "enum",
+                  "list"
+                ]
+              }
+            }
+          }
         }
       ]
+    },
+    "listItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [ "type" ],
+      "description": "What each entry of a list field must be.",
+      "properties": {
+        "type": { "enum": [ "string" ], "description": "Entry type. Only \"string\" for now." },
+        "min_length": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Minimum number of characters."
+        },
+        "max_length": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Maximum number of characters."
+        },
+        "pattern": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Regular expression (JavaScript syntax) the whole value must match. Needs an \"example\", so the form can show the expected format."
+        },
+        "format": {
+          "enum": [ "ip_or_cidr", "url", "email" ],
+          "description": "A common format the value must have, e.g. ip_or_cidr."
+        }
+      }
     },
     "telemetryEvent": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["name", "type", "trigger", "properties"],
+      "required": [ "name", "type", "trigger", "properties" ],
       "properties": {
         "name": {
           "type": "string",
@@ -254,7 +437,7 @@
           "description": "Full event name, including the telemetry prefix."
         },
         "type": {
-          "enum": ["tracks"],
+          "enum": [ "tracks" ],
           "description": "Telemetry channel. VIP integrations use Tracks only."
         },
         "trigger": {
