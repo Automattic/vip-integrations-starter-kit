@@ -32,7 +32,8 @@ dev-env container (`vip dev-env shell`) it is preconfigured.
 
 ## Runtime Config
 
-Config constant: `VIP_EXAMPLE_INTEGRATION_CONFIG`
+Config constant: `VIP_EXAMPLE_INTEGRATION_CONFIG` — derived from the slug, not
+declared in the manifest.
 
 The VIP platform defines the constant (a plain PHP associative array) before
 the plugin loads. All reads go through `ExampleVendor\ExampleIntegration\Config`.

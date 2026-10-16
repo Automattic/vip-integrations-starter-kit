@@ -103,7 +103,7 @@ if ( file_exists( 'example-integration.php' ) ) {
 }
 
 fwrite( STDOUT, "Rewrote {$changed} file(s).\n" );
-fwrite( STDOUT, "Prefix set: slug={$name_kebab}, namespace={$vendor_pascal}\\{$name_pascal}, constant=VIP_{$name_upper}_CONFIG\n" );
+fwrite( STDOUT, "Prefix set: slug={$name_kebab}, namespace={$vendor_pascal}\\{$name_pascal}, constant=VIP_{$name_upper}_CONFIG (derived from the slug, not declared in the manifest)\n" );
 
 $outstanding = outstanding_examples( "{$name_kebab}.php" );
 
