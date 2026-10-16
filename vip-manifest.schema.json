@@ -17,7 +17,7 @@
   "properties": {
     "manifest_version": {
       "enum": [ 1, 2 ],
-      "description": "Manifest format version. Version 2 derives the config constant from the slug; version 1 is deprecated (it declared the constant via runtime_config.constant_name) and is accepted with a warning during the deprecation window."
+      "description": "Manifest format version. Version 2 derives the config constant from the slug. Version 1 is deprecated and accepted during the deprecation window, with a warning only when runtime_config.constant_name declares the matching derived name. Omitting constant_name produces no warning."
     },
     "manifest_kind": {
       "const": "vip-integration-handoff",
@@ -385,27 +385,6 @@
           "$comment": "\"max_items\" only applies to type \"list\".",
           "if": { "required": [ "max_items" ] },
           "then": { "properties": { "type": { "enum": [ "list" ] } } }
-        },
-        {
-          "$comment": "\"example\" only applies to type \"string\", \"text\", \"url\", \"email\", \"number\", \"boolean\", \"secret\", \"enum\", \"list\".",
-          "if": { "required": [ "example" ] },
-          "then": {
-            "properties": {
-              "type": {
-                "enum": [
-                  "string",
-                  "text",
-                  "url",
-                  "email",
-                  "number",
-                  "boolean",
-                  "secret",
-                  "enum",
-                  "list"
-                ]
-              }
-            }
-          }
         }
       ]
     },
