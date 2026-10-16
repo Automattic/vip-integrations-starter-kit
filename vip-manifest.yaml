@@ -10,7 +10,7 @@
 # See docs/manifest.md for a field-by-field guide, and vip-manifest.schema.json
 # for the full schema (fields, types, and constraints).
 
-manifest_version: 1
+manifest_version: 2
 manifest_kind: vip-integration-handoff
 
 integration:
@@ -33,7 +33,6 @@ runtime:
     scope: site
 
 runtime_config:
-  constant_name: VIP_EXAMPLE_INTEGRATION_CONFIG
   fields:
     - key: api_base_url
       label: API base URL

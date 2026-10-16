@@ -14,18 +14,20 @@ npx @automattic/vip-integration validate
 ```
 
 `composer setup` (or `vip-integration init`) rewrites the example names in the
-manifest to yours — slug, folder, entry file, namespace, and config constant —
-so most of the plumbing fields are filled in for you. You own the identity
+manifest to yours — slug, folder, entry file, and namespace — so most of the
+plumbing fields are filled in for you. The config constant is derived from your
+slug, not declared: the platform defines `VIP_<SLUG>_CONFIG` (slug upper-cased,
+`-` → `_`), e.g. `content-sync` → `VIP_CONTENT_SYNC_CONFIG`. You own the identity
 fields and the config schema.
 
 ## Fields
 
 ### Top level
 
-| Field              | Required | Notes                                |
-| ------------------ | -------- | ------------------------------------ |
-| `manifest_version` | yes      | Manifest format version. Always `1`. |
-| `manifest_kind`    | yes      | Always `vip-integration-handoff`.    |
+| Field              | Required | Notes                                                                                                                                                          |
+| ------------------ | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `manifest_version` | yes      | Manifest format version. `2` — the platform derives the config constant from the slug. `1` is deprecated (it declared the constant) and accepted with a warning during the deprecation window. |
+| `manifest_kind`    | yes      | Always `vip-integration-handoff`.                                                                                                                              |
 
 ### `integration` — catalog identity
 
@@ -60,14 +62,20 @@ Set by `composer setup` — you rarely edit these by hand.
 ### `runtime_config` — the config the platform manages for you
 
 VIP defines a single PHP constant (a config array) before your plugin loads, and
-renders a form in the Dashboard from the fields you declare here. See
-[vip-integration.md](vip-integration.md#runtime-config) for how the plugin reads
-it.
+renders a form in the Dashboard from the fields you declare here. The constant
+is **not declared here** — the platform derives it from your slug as
+`VIP_<SLUG>_CONFIG` (slug upper-cased, `-` → `_`), e.g. `content-sync` →
+`VIP_CONTENT_SYNC_CONFIG`. See [vip-integration.md](vip-integration.md#runtime-config)
+for how the plugin reads it.
 
-| Field           | Required | Notes                                                                                        |
-| --------------- | -------- | -------------------------------------------------------------------------------------------- |
-| `constant_name` | yes      | The constant your plugin reads. Must match `VIP_*_CONFIG`, e.g. `VIP_MY_INTEGRATION_CONFIG`. |
-| `fields`        | yes      | At least one config field (below).                                                           |
+| Field    | Required | Notes                                            |
+| -------- | -------- | ------------------------------------------------ |
+| `fields` | yes      | At least one config field (below).               |
+
+A version 1 manifest may still declare `constant_name` during the deprecation
+window: a value equal to the derived name is accepted with a warning telling you
+to drop it; any other value fails, because the platform defines the derived
+constant regardless of what the manifest says.
 
 Each entry in `fields`:
 
