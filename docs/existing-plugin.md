@@ -88,7 +88,7 @@ manifest_version: 1
 manifest_kind: vip-integration-handoff
 
 integration:
-  slug: example-plugin # kebab-case, 3–63 chars, stable forever
+  slug: example-plugin # kebab-case, 3–30 chars, stable forever
   display_name: Example Plugin # ≤ 60 chars
   summary: One line describing what the integration does. # ≤ 200 chars
   partner:

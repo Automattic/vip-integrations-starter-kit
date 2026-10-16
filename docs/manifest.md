@@ -31,7 +31,7 @@ fields and the config schema.
 
 | Field                     | Required | Notes                                                                                                       |
 | ------------------------- | -------- | ----------------------------------------------------------------------------------------------------------- |
-| `slug`                    | yes      | Stable kebab-case id, unique in the Integration Center (3–63 chars). Changing it later re-lists the add-on. |
+| `slug`                    | yes      | Stable kebab-case id, unique in the Integration Center (3–30 chars). Changing it later re-lists the add-on. |
 | `display_name`            | yes      | Name shown in the catalog (≤ 60 chars).                                                                     |
 | `summary`                 | yes      | One-line description on the catalog card (≤ 200 chars).                                                     |
 | `partner.name`            | yes      | Your vendor name.                                                                                           |
