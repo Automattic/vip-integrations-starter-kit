@@ -84,7 +84,7 @@ optional, but if present it must be complete.
 ```yaml
 # yaml-language-server: $schema=./vip-manifest.schema.json
 
-manifest_version: 1
+manifest_version: 2
 manifest_kind: vip-integration-handoff
 
 integration:
@@ -107,7 +107,6 @@ runtime:
     scope: site # or network
 
 runtime_config:
-  constant_name: VIP_EXAMPLE_PLUGIN_CONFIG # must match ^VIP_[A-Z0-9_]+_CONFIG$
   fields:
     - key: api_base_url
       label: API base URL
@@ -144,9 +143,10 @@ Notes worth knowing before you write it:
 **Copy from:** [`inc/class-config.php`](../inc/class-config.php).
 
 VIP defines a single PHP constant — a plain associative array — before your
-plugin loads. Every read of it goes through one class. Do not read `$_ENV`,
-do not add a second config source, and do not touch the constant from anywhere
-but this class.
+plugin loads. Its name is derived from your slug: `VIP_<SLUG>_CONFIG` with the
+slug upper-cased and `-` → `_`. Every read of it goes through one class. Do not
+read `$_ENV`, do not add a second config source, and do not touch the constant
+from anywhere but this class.
 
 The minimum shape the checker and the platform expect:
 
@@ -310,9 +310,11 @@ twice. There is no manifest field for it, so say which constant you used when yo
 hand off. The version constant is what the telemetry wrapper reports.
 
 **Your existing constant prefix stays.** Only the runtime config constant is
-dictated: it must match `^VIP_[A-Z0-9_]+_CONFIG$`. An established plugin already
-using, say, `MYPLUGIN_VERSION` and `MYPLUGIN_FILE` does not have to rename those.
-Add `VIP_MYPLUGIN_CONFIG` for config and a loaded guard alongside them.
+dictated: the platform derives it from your slug as `VIP_<SLUG>_CONFIG` (slug
+upper-cased, `-` → `_`), so `myplugin` reads `VIP_MYPLUGIN_CONFIG`. An
+established plugin already using, say, `MYPLUGIN_VERSION` and `MYPLUGIN_FILE`
+does not have to rename those. Add `VIP_MYPLUGIN_CONFIG` for config and a loaded
+guard alongside them.
 
 Your plugin header also needs `Version` matching `release.plugin_version` in the
 manifest, plus `Requires at least` and `Requires PHP`.
