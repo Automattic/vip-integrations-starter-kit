@@ -306,14 +306,16 @@ define( 'VIP_EXAMPLE_PLUGIN_FILE', __FILE__ );
 VIP writes a loader class for your integration in its own mu-plugins, and that
 class's `is_loaded()` check keys off a constant your entry file defines — that is
 how a customer who also has your plugin in their own repository avoids loading it
-twice. There is no manifest field for it, so say which constant you used when you
-hand off. The version constant is what the telemetry wrapper reports.
+twice. Name it `VIP_<SLUG>_LOADED`: the platform derives that name from your slug,
+so there is nothing to declare in the manifest or at handoff. The version
+constant is what the telemetry wrapper reports.
 
-**Your existing constant prefix stays.** Only the runtime config constant is
-dictated: the platform derives it from your slug as `VIP_<SLUG>_CONFIG` (slug
-upper-cased, `-` → `_`), so `myplugin` reads `VIP_MYPLUGIN_CONFIG`. An
-established plugin already using, say, `MYPLUGIN_VERSION` and `MYPLUGIN_FILE`
-does not have to rename those. Add `VIP_MYPLUGIN_CONFIG` for config and a loaded
+**Your existing constant prefix stays.** Only the config and loaded constants
+are dictated: the platform derives them from your slug as `VIP_<SLUG>_CONFIG`
+and `VIP_<SLUG>_LOADED` (slug upper-cased, `-` → `_`), so `myplugin` reads
+`VIP_MYPLUGIN_CONFIG` and defines `VIP_MYPLUGIN_LOADED`. An established plugin
+already using, say, `MYPLUGIN_VERSION` and `MYPLUGIN_FILE` does not have to
+rename those. Add `VIP_MYPLUGIN_CONFIG` for config and the `VIP_MYPLUGIN_LOADED`
 guard alongside them.
 
 Your plugin header also needs `Version` matching `release.plugin_version` in the
